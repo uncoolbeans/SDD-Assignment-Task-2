@@ -8,3 +8,6 @@ https://docs.google.com/document/d/100USxqvRZlFTJRk7exb_-Ka7tHNJzmLpmFUz3c1ly7E/
 
 Solutions:
 https://docs.google.com/document/d/1VrUf9mlhxUiNM08j5nPN91dG3kcTXT3ijAGEA1NmjsA/edit
+
+CustomTkinter Documentation:
+https://customtkinter.tomschimansky.com/documentation/
