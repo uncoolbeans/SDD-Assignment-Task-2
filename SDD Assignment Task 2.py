@@ -24,6 +24,9 @@ class player: #creating a class for player that will be used to store the statis
 team1 = []
 team2 = []
 
+def switchToGameScreen():
+    pass
+
 StartingScreen = ctk.CTkFrame(master=root, width=900, height=700) #This frame is the screen that the user opens the app into
 StartingScreen.pack()
 
@@ -42,7 +45,8 @@ teamTwoName = ctk.CTkEntry(teamTwoFrame,placeholder_text="Enter team 2 name",wid
 teamTwoName.grid(row=0,column=1)
 
 
-
+nextButton = ctk.CTkButton(StartingScreen,text='Next', width=900, height = 100, command = switchToGameScreen)
+nextButton.grid(row=1,column=0,columnspan = 2)
 
 
 root.mainloop()
