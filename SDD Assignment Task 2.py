@@ -39,7 +39,7 @@ Starting menu screen
 
 menuScreen = ctk.CTkFrame(master=root, width = 900, height = 700) #screen that the user sees when they first open the program
 
-beginButton = ctk.CTkButton(menuScreen, text = "New Game", anchor =  'center', width = 300, height = 100,  command=lambda: switchToNewScreen(menuScreen,startingScreen))
+beginButton = ctk.CTkButton(menuScreen, text = "New Game", anchor =  'center', width = 300, height = 100,  command=lambda: switchToNewScreen(menuScreen,entryScreen))
 exitButton = ctk.CTkButton(menuScreen,text = "EXIT",anchor =  'center', width = 300, height = 100,  hover = True, command=closeProgram)
 titleLabel = ctk.CTkLabel(menuScreen, text = 'Cricket Score Tracker', fg_color= 'transparent', anchor= 'center', font = ("Montserrat",30),padx = 10, pady=50)
 titleLabel.pack()
@@ -51,30 +51,63 @@ menuScreen.pack(fill = 'both', expand = 1)
 """
 Team information entry screen
 """
-startingScreen = ctk.CTkFrame(master=root, width=900, height=700) #This frame is the screen that the user opens the app into
+entryScreen = ctk.CTkFrame(master=root, width=900, height=700) #This frame is the screen that the user opens the app into
 
 
-teamOneFrame = ctk.CTkScrollableFrame(startingScreen, width = 450, height=600) #frame containing name entry for team one
+teamOneFrame = ctk.CTkScrollableFrame(entryScreen, width = 450, height=600) #frame containing name entry for team one
 teamOneFrame.grid(row=0, column = 0)
-teamOneHeader = ctk.CTkLabel(teamOneFrame,text="TEAM 1", fg_color="transparent", font = ("Montserrat",24),padx = 10, pady = 3)
-teamOneHeader.grid(row = 0, column = 0)
-teamOneName = ctk.CTkEntry(teamOneFrame,placeholder_text="Enter team 1 name",width=300)
-teamOneName.grid(row=0,column=1)
+teamOneHeader = ctk.CTkLabel(teamOneFrame,text="TEAM 1", fg_color="transparent", font = ("Montserrat",30))
+teamOneHeader.grid(row = 0, column = 0, pady = 10, padx = 5)
+teamOneName = ctk.CTkEntry(teamOneFrame,placeholder_text= "Team name",width=300, height = 50, font = ('Montserrat', 18))
+teamOneName.grid(row=0,column=1, pady = 10)
 
-teamTwoFrame = ctk.CTkScrollableFrame(startingScreen, width = 450, height=600) #frame containing name entry for team two
+t1p1_entry = ctk.CTkEntry(teamOneFrame, placeholder_text="Player 1",width=300)
+t1p2_entry = ctk.CTkEntry(teamOneFrame, placeholder_text="Player 2",width=300)
+t1p3_entry = ctk.CTkEntry(teamOneFrame, placeholder_text="Player 3",width=300)
+t1p4_entry = ctk.CTkEntry(teamOneFrame, placeholder_text="Player 4",width=300)
+t1p5_entry = ctk.CTkEntry(teamOneFrame, placeholder_text="Player 5",width=300)
+t1p6_entry = ctk.CTkEntry(teamOneFrame, placeholder_text="Player 6",width=300)
+t1p7_entry = ctk.CTkEntry(teamOneFrame, placeholder_text="Player 7",width=300)
+t1p8_entry = ctk.CTkEntry(teamOneFrame, placeholder_text="Player 8",width=300)
+t1p9_entry = ctk.CTkEntry(teamOneFrame, placeholder_text="Player 9",width=300)
+t1p10_entry = ctk.CTkEntry(teamOneFrame, placeholder_text="Player 10",width=300)
+team1Entries = [t1p1_entry,t1p2_entry,t1p3_entry,t1p4_entry,t1p5_entry,t1p6_entry,t1p7_entry,t1p8_entry,t1p9_entry,t1p10_entry]
+
+for count,entry in enumerate(team1Entries):
+    entry.grid(row = count+1, pady = 10, columnspan = 2, column = 0)
+    pass
+
+
+
+teamTwoFrame = ctk.CTkScrollableFrame(entryScreen, width = 450, height=600) #frame containing name entry for team two
 teamTwoFrame.grid(row=0, column = 1)
 teamOneHeader = ctk.CTkLabel(teamTwoFrame,text="TEAM 2", fg_color="transparent", font = ("Montserrat",24),padx = 10, pady = 3)
-teamOneHeader.grid(row = 0, column = 0)
-teamTwoName = ctk.CTkEntry(teamTwoFrame,placeholder_text="Enter team 2 name",width=300)
-teamTwoName.grid(row=0,column=1)
+teamOneHeader.grid(row = 0, column = 0, pady = 10, padx = 5)
+teamTwoName = ctk.CTkEntry(teamTwoFrame,placeholder_text= "Team name",width=300, height = 50, font = ('Montserrat', 18))
+teamTwoName.grid(row=0,column=1, pady = 10)
 
-nextButton = ctk.CTkButton(startingScreen,text='Next', width=900, height = 100, command = switchToNewScreen)
+t2p1_entry = ctk.CTkEntry(teamTwoFrame, placeholder_text="Player 1",width=300)
+t2p2_entry = ctk.CTkEntry(teamTwoFrame, placeholder_text="Player 2",width=300)
+t2p3_entry = ctk.CTkEntry(teamTwoFrame, placeholder_text="Player 3",width=300)
+t2p4_entry = ctk.CTkEntry(teamTwoFrame, placeholder_text="Player 4",width=300)
+t2p5_entry = ctk.CTkEntry(teamTwoFrame, placeholder_text="Player 5",width=300)
+t2p6_entry = ctk.CTkEntry(teamTwoFrame, placeholder_text="Player 6",width=300)
+t2p7_entry = ctk.CTkEntry(teamTwoFrame, placeholder_text="Player 7",width=300)
+t2p8_entry = ctk.CTkEntry(teamTwoFrame, placeholder_text="Player 8",width=300)
+t2p9_entry = ctk.CTkEntry(teamTwoFrame, placeholder_text="Player 9",width=300)
+t2p10_entry = ctk.CTkEntry(teamTwoFrame, placeholder_text="Player 10",width=300)
+team2Entries = [t2p1_entry,t2p2_entry,t2p3_entry,t2p4_entry,t2p5_entry,t2p6_entry,t2p7_entry,t2p8_entry,t2p9_entry,t2p10_entry]
+
+for count,entry in enumerate(team2Entries):
+    entry.grid(row = count+1, pady = 10, columnspan = 2, column = 0)
+    pass
+
+nextButton = ctk.CTkButton(entryScreen,text='Next', width=900, height = 100, command = switchToNewScreen)
 nextButton.grid(row=1,column=0,columnspan = 2)
 
 """
 Game score screen
 """
-
 gameFrame = ctk.CTkFrame(master=root, width= 900, height = 700)
 
 
