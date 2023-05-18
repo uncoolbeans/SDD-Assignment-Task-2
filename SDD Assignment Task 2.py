@@ -14,6 +14,7 @@ storing the bowler’s name whenever a batter gets out.
 root = ctk.CTk()
 root.title('Cricket Scorecard')
 ctk.set_appearance_mode("dark")
+root.geometry("900x700")
 
 class player: #creating a class for player that will be used to store the statistics of each player later on
     def __init__(self,name):
@@ -21,14 +22,36 @@ class player: #creating a class for player that will be used to store the statis
     runs = 0
     balls = 0
 
-team1 = []
-team2 = []
+me = player("bill")
+me.balls += 1
+print(me.balls)
 
-def switchToGameScreen():
-    pass
+def switchToNewScreen(oldFrame,newFrame):
+    oldFrame.forget()
+    newFrame.pack()
+    return
+
+def closeProgram():  #what does this do?????????????
+    root.quit()
+    return
+
+team1Players = []
+team2Players = []
+
+menuScreen = ctk.CTkFrame(master=root, width = 900, height = 700) #screen that the user sees when they first open the program
+
+beginButton = ctk.CTkButton(menuScreen, text = "New Game", anchor =  'center', width = 300, height = 100,  command=lambda: switchToNewScreen(menuScreen,StartingScreen))
+exitButton = ctk.CTkButton(menuScreen,text = "EXIT",anchor =  'center', width = 300, height = 100,  hover = True, command=closeProgram)
+titleLabel = ctk.CTkLabel(menuScreen, text = 'Cricket Score Tracker', fg_color= 'transparent', anchor= 'center', font = ("Montserrat",30),padx = 10, pady=50)
+titleLabel.pack()
+beginButton.pack(pady = 10)
+exitButton.pack(pady = 10)
+menuScreen.pack(fill = 'both', expand = 1)
+
+
 
 StartingScreen = ctk.CTkFrame(master=root, width=900, height=700) #This frame is the screen that the user opens the app into
-StartingScreen.pack()
+
 
 teamOneFrame = ctk.CTkScrollableFrame(StartingScreen, width = 450, height=600) #frame containing name entry for team one
 teamOneFrame.grid(row=0, column = 0)
@@ -45,8 +68,15 @@ teamTwoName = ctk.CTkEntry(teamTwoFrame,placeholder_text="Enter team 2 name",wid
 teamTwoName.grid(row=0,column=1)
 
 
-nextButton = ctk.CTkButton(StartingScreen,text='Next', width=900, height = 100, command = switchToGameScreen)
+nextButton = ctk.CTkButton(StartingScreen,text='Next', width=900, height = 100, command = switchToNewScreen)
 nextButton.grid(row=1,column=0,columnspan = 2)
+
+
+
+gameFrame = ctk.CTkFrame(master=root, width= 900, height = 700)
+
+
+
 
 
 root.mainloop()
