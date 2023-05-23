@@ -26,8 +26,13 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         super().__init__(master, width=900, height = 700)
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
+
         teamName = teamName
         players= players
+        teamRuns = 0
+        teamBalls = 0
+        teamWicket = 0
+        
 
         self.TeamLabel = ctk.CTkLabel(self, text= teamName, 
                                       fg_color= 'grey', 
@@ -54,20 +59,13 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         self.emptyLabel2 = ctk.CTkLabel(self, text= '',width = 500, fg_color = 'transparent', bg_color = 'transparent')
         self.emptyLabel2.grid(column = 1, row = 1, columnspan = 2)
                     
-                                
-
-        #for player in players:
-        #    self.playerLabel = ctk.CTkLabel(self, text = player.name)
-        #    self.playerLabel.pack()
-
-            
-
+                            
 def switchToNewScreen(oldFrame,newFrame): #general switch screen function
     oldFrame.forget()
     newFrame.pack()
     return
 
-def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries):
+def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #function to initialise start of the game and scoreboards
 
     t1_name = t1Name.get()
     t2_name = t2Name.get()
@@ -163,8 +161,8 @@ teamOneHeader = ctk.CTkLabel(teamTwoFrame,text="TEAM 2",
                              fg_color="transparent", 
                              font = ("Bahnschrift SemiBold",30),
                              padx = 10, pady = 3)
-
 teamOneHeader.grid(row = 0, column = 0, pady = 10, padx = 5)
+
 teamTwoName = ctk.CTkEntry(teamTwoFrame,placeholder_text= "Team name",
                            width=250, height = 50, 
                            font = ('Bahnschrift SemiBold', 18))
