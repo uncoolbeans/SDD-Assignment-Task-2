@@ -36,7 +36,25 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                       corner_radius= 10, 
                                       anchor = 'w')
         
-        self.TeamLabel.place(anchor = 'nw', relx = 0.01, rely = 0.02)
+        self.TeamLabel.grid(column = 0, row = 0)
+
+        self.batterLabel = ctk.CTkLabel(self, text= 'Batting team', 
+                                      fg_color = 'transparent', 
+                                      bg_color = 'transparent',
+                                      font = ("Bahnschrift SemiBold",18),
+                                      anchor = 'w',
+                                      justify = 'left'
+                                    )
+        
+        self.batterLabel.grid(column = 0, row = 1)
+
+        self.emptyLabel = ctk.CTkLabel(self, text= '',width = 500, fg_color = 'transparent', bg_color = 'transparent')
+        self.emptyLabel.grid(column = 1, row = 0, columnspan = 2)
+
+        self.emptyLabel2 = ctk.CTkLabel(self, text= '',width = 500, fg_color = 'transparent', bg_color = 'transparent')
+        self.emptyLabel2.grid(column = 1, row = 1, columnspan = 2)
+                    
+                                
 
         #for player in players:
         #    self.playerLabel = ctk.CTkLabel(self, text = player.name)
@@ -120,7 +138,7 @@ teamOneFrame = ctk.CTkScrollableFrame(entryScreen, width = 435, height=600) #fra
 teamOneFrame.grid(row=0, column = 0)
 teamOneHeader = ctk.CTkLabel(teamOneFrame,text="TEAM 1", fg_color="transparent", font = ("Bahnschrift SemiBold",30))
 teamOneHeader.grid(row = 0, column = 0, pady = 10, padx = 5)
-teamOneName = ctk.CTkEntry(teamOneFrame,placeholder_text= "Team name",width=250, height = 50, font = ('Montserrat', 18))
+teamOneName = ctk.CTkEntry(teamOneFrame,placeholder_text= "Team name",width=250, height = 50, font = ('Bahnschrift SemiBold', 18))
 teamOneName.grid(row=0,column=1, pady = 10)
 
 t1p1_entry = ctk.CTkEntry(teamOneFrame, placeholder_text="Player 1",width=300)
@@ -141,9 +159,15 @@ for count,entry in enumerate(team1Entries):
 
 teamTwoFrame = ctk.CTkScrollableFrame(entryScreen, width = 435, height=600) #frame containing name entry for team two
 teamTwoFrame.grid(row=0, column = 1)
-teamOneHeader = ctk.CTkLabel(teamTwoFrame,text="TEAM 2", fg_color="transparent", font = ("Bahnschrift SemiBold",30),padx = 10, pady = 3)
+teamOneHeader = ctk.CTkLabel(teamTwoFrame,text="TEAM 2", 
+                             fg_color="transparent", 
+                             font = ("Bahnschrift SemiBold",30),
+                             padx = 10, pady = 3)
+
 teamOneHeader.grid(row = 0, column = 0, pady = 10, padx = 5)
-teamTwoName = ctk.CTkEntry(teamTwoFrame,placeholder_text= "Team name",width=250, height = 50, font = ('Montserrat', 18))
+teamTwoName = ctk.CTkEntry(teamTwoFrame,placeholder_text= "Team name",
+                           width=250, height = 50, 
+                           font = ('Bahnschrift SemiBold', 18))
 teamTwoName.grid(row=0,column=1, pady = 10)
 
 t2p1_entry = ctk.CTkEntry(teamTwoFrame, placeholder_text="Player 1",width=300)
@@ -162,14 +186,11 @@ for count,entry in enumerate(team2Entries):
     entry.grid(row = count+1, pady = 10, columnspan = 2, column = 0)
     pass
 
-
-
-
-
 nextButton = ctk.CTkButton(entryScreen,text='Next', 
                            font = ("Bahnschrift SemiBold",18),
                            width=900, height = 100, 
                            command = lambda: startGame(entryScreen,gameFrame,teamOneName,teamTwoName,team1Entries,team2Entries))
+
 nextButton.grid(row=1,column=0,columnspan = 2)
 
 
