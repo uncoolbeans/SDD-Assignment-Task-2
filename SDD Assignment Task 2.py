@@ -21,14 +21,59 @@ class player: #creating a class for player that will be used to store the statis
     runs = 0
     balls = 0
 
-def switchToNewScreen(oldFrame,newFrame):
+class ScoringFrame(ctk.CTkFrame):
+    def __init__(self, master, teamName, players):
+        super().__init__(master, width=900, height = 700)
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+        teamName = teamName
+        players= players
+
+        self.TeamLabel = ctk.CTkLabel(self, text= teamName, fg_color= 'grey', font = ("Montserrat",30), width= 300, height = 50, corner_radius= 10, anchor = 'w')
+        self.TeamLabel.place(anchor = 'nw', relx = 0.01, rely = 0.02)
+
+        #for player in players:
+        #    self.playerLabel = ctk.CTkLabel(self, text = player.name)
+        #    self.playerLabel.pack()
+
+            
+
+def switchToNewScreen(oldFrame,newFrame): #general switch screen function
     oldFrame.forget()
     newFrame.pack()
     return
 
-def closeProgram():  #what does this do?????????????
+def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries):
+
+    t1_name = t1Name.get()
+    t2_name = t2Name.get()
+    t1Players = []
+    t2Players = []
+    for textbox in t1Entries:
+        name = textbox.get()
+        t1Players.append(player(name))
+
+    for textbox in t2Entries:
+        name = textbox.get()
+        t2Players.append(player(name))
+
+    global t1ScoreFrame 
+    global t2ScoreFrame
+
+    t1ScoreFrame = ScoringFrame(newFrame,t1_name,t1Players)
+    t2ScoreFrame = ScoringFrame(newFrame,t2_name,t2Players)
+
+    oldFrame.forget()
+    newFrame.pack()
+    t1ScoreFrame.pack()
+
+    return
+
+
+def closeProgram():  #exits program
     root.quit()
     return
+
 
 team1Players = []
 team2Players = []
@@ -77,8 +122,6 @@ for count,entry in enumerate(team1Entries):
     entry.grid(row = count+1, pady = 10, columnspan = 2, column = 0)
     pass
 
-
-
 teamTwoFrame = ctk.CTkScrollableFrame(entryScreen, width = 450, height=600) #frame containing name entry for team two
 teamTwoFrame.grid(row=0, column = 1)
 teamOneHeader = ctk.CTkLabel(teamTwoFrame,text="TEAM 2", fg_color="transparent", font = ("Montserrat",24),padx = 10, pady = 3)
@@ -102,16 +145,18 @@ for count,entry in enumerate(team2Entries):
     entry.grid(row = count+1, pady = 10, columnspan = 2, column = 0)
     pass
 
-nextButton = ctk.CTkButton(entryScreen,text='Next', width=900, height = 100, command = switchToNewScreen)
+
+
+
+
+nextButton = ctk.CTkButton(entryScreen,text='Next', width=900, height = 100, command = lambda: startGame(entryScreen,gameFrame,teamOneName,teamTwoName,team1Entries,team2Entries))
 nextButton.grid(row=1,column=0,columnspan = 2)
 
+
 """
-Game score screen
+Game Frame (contains the frames for team 1 and 2)
 """
-gameFrame = ctk.CTkFrame(master=root, width= 900, height = 700)
-
-
-
+gameFrame = ctk.CTkFrame(root,width = 900, height = 700)
 
 
 root.mainloop()
