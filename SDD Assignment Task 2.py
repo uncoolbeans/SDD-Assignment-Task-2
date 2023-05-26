@@ -5,7 +5,8 @@ import customtkinter as ctk
 Topic: Doing a software that helps keep score for cricket games
 
 Your program must keep track of the two opposing teams. The user should be able to enter data on a ball-by-ball basis. 
-Each ball should result in either a hit (with an amount of runs attached), a wide, a no-ball or a pass ball (with an amount of runs attached). 
+Each ball should result in either a hit (with an amount of runs attached), a wide, a
+ no-ball or a pass ball (with an amount of runs attached). 
 The program should keep track of overs, providing indication when it’s time to swap ends. It should also keep track of outs, 
 storing the bowler’s name whenever a batter gets out.
 
@@ -21,18 +22,21 @@ class player: #creating a class for player that will be used to store the statis
     runs = 0
     balls = 0
 
+"""
+Score frame for each team
+"""
 class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team information and allows user to update game statistics for a team
-    def __init__(self, master, teamName, players):
+    def __init__(self, master, teamName, players, teamNum):
         super().__init__(master, width=900, height = 700)
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
         teamName = teamName
+        teamNum = teamNum
         players= players
         teamRuns = 0
         teamBalls = 0
         teamWicket = 0
-        
 
         self.TeamLabel = ctk.CTkLabel(self, text= teamName, 
                                       fg_color= 'grey', 
@@ -58,8 +62,16 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
 
         self.emptyLabel2 = ctk.CTkLabel(self, text= '',width = 500, fg_color = 'transparent', bg_color = 'transparent')
         self.emptyLabel2.grid(column = 1, row = 1, columnspan = 2)
-                    
-                            
+
+        #self.swapTeamsButton = ctk.CTkButton(self, command = lambda: switchToNewScreen(self,otherTeam))
+        #self.swapTeamsButton.grid(column = 1, row= 3)
+
+        for count,player in enumerate(players):
+
+            pass
+            
+    
+           
 def switchToNewScreen(oldFrame,newFrame): #general switch screen function
     oldFrame.forget()
     newFrame.pack()
@@ -71,6 +83,7 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
     t2_name = t2Name.get()
     t1Players = []
     t2Players = []
+
     for textbox in t1Entries:
         name = textbox.get()
         t1Players.append(player(name))
@@ -81,12 +94,17 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
 
     global t1ScoreFrame 
     global t2ScoreFrame
+    global teamFrames
+    
+    newFrame.add(t1_name)
+    newFrame.add(t2_name)
 
-    t1ScoreFrame = ScoringFrame(newFrame,t1_name,t1Players)
-    t2ScoreFrame = ScoringFrame(newFrame,t2_name,t2Players)
+    t1ScoreFrame = ScoringFrame(newFrame.tab(t1_name),t1_name,t1Players,1)
+    t2ScoreFrame = ScoringFrame(newFrame.tab(t2_name),t2_name,t2Players,2)
 
     oldFrame.forget()
     newFrame.pack()
+    t2ScoreFrame.pack()
     t1ScoreFrame.pack()
     return
 
@@ -187,15 +205,15 @@ for count,entry in enumerate(team2Entries):
 nextButton = ctk.CTkButton(entryScreen,text='Next', 
                            font = ("Bahnschrift SemiBold",18),
                            width=900, height = 100, 
-                           command = lambda: startGame(entryScreen,gameFrame,teamOneName,teamTwoName,team1Entries,team2Entries))
+                           command = lambda: startGame(entryScreen,gameTab,teamOneName,teamTwoName,team1Entries,team2Entries))
 
 nextButton.grid(row=1,column=0,columnspan = 2)
 
 
 """
-Game Frame (contains the frames for team 1 and 2)
+Game Tab View (contains the frames for team 1 and 2)
 """
-gameFrame = ctk.CTkFrame(root,width = 900, height = 700)
+gameTab = ctk.CTkTabview(master = root,width = 900, height = 700)
 
 
 root.mainloop()
