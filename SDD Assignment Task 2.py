@@ -28,8 +28,10 @@ Score frame for each team
 class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team information and allows user to update game statistics for a team
     def __init__(self, master, teamName, players, teamNum):
         super().__init__(master, width=900, height = 700)
+
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight = 3)
 
         teamName = teamName
         teamNum = teamNum
@@ -38,14 +40,20 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         teamBalls = 0
         teamWicket = 0
 
+        def addRuns(runs,label):
+            text = label.cget("text")
+            currentRuns = int(text)
+            newRuns = currentRuns + runs
+            label.configure(text=str(newRuns))
+            return
+        
         self.TeamLabel = ctk.CTkLabel(self, text= teamName, 
                                       fg_color= 'grey', 
                                       font = ("Bahnschrift SemiBold",30), 
-                                      width= 400, height = 50, 
+                                      width= 300, height = 50, 
                                       corner_radius= 10, 
                                       anchor = 'w')
-        
-        self.TeamLabel.grid(column = 0, row = 0)
+        self.TeamLabel.grid(column = 0, row = 1, padx = 5, pady = 5, sticky = 'nw')
 
         self.batterLabel = ctk.CTkLabel(self, text= 'Batting team', 
                                       fg_color = 'transparent', 
@@ -55,20 +63,47 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                       justify = 'left'
                                     )
         
-        self.batterLabel.grid(column = 0, row = 1)
+        self.batterLabel.grid(column = 0, row = 0)
 
-        self.emptyLabel = ctk.CTkLabel(self, text= '',width = 500, fg_color = 'transparent', bg_color = 'transparent')
+        self.emptyLabel = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 550)
         self.emptyLabel.grid(column = 1, row = 0, columnspan = 2)
 
-        self.emptyLabel2 = ctk.CTkLabel(self, text= '',width = 500, fg_color = 'transparent', bg_color = 'transparent')
+        self.emptyLabel2 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 200)
         self.emptyLabel2.grid(column = 1, row = 1, columnspan = 2)
 
-        #self.swapTeamsButton = ctk.CTkButton(self, command = lambda: switchToNewScreen(self,otherTeam))
-        #self.swapTeamsButton.grid(column = 1, row= 3)
+        self.runsLabel = ctk.CTkLabel(self, text = str(teamRuns),
+                                      font = ("Bahnschrift SemiBold",30), 
+                                      fg_color = 'grey', 
+                                      width = 100,
+                                      height = 60,
+                                      corner_radius = 10
+                                      )
+        self.runsLabel.grid(column = 0, row = 2, padx = 5, pady = 7)
+        
+        self.runsText = ctk.CTkLabel(self, text = "Runs",
+                                     font = ("Bahnschrift SemiBold",30), 
+                                     width = 100,
+                                     height = 60,
+                                     )
+        self.runsText.grid(column = 0, row = 3)
 
-        for count,player in enumerate(players):
+        for runs in range(1,6):
+            self.addRunsButton = ctk.CTkButton(self, text = f"+ {runs}", 
+                                                fg_color = 'grey', 
+                                                bg_color = 'transparent',
+                                                font = ("Bahnschrift SemiBold",18),
+                                                width = 100,
+                                                command = lambda runs = runs: addRuns(runs, self.runsLabel),
+                                                corner_radius=5
+                                            )
+            self.addRunsButton.grid(column = 0, rows = 3+runs, pady = 3)
 
-            pass
+        #for count,player in enumerate(players):
+        #    self.label = ctk.CTkLabel(self, text = (f"Player {count}: {player.name}"))
+        #    self.label.grid(column = 0, row = count+1)
+
+        
+            
             
     
            
@@ -77,7 +112,7 @@ def switchToNewScreen(oldFrame,newFrame): #general switch screen function
     newFrame.pack()
     return
 
-def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #function to initialise start of the game and scoreboards
+def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #function to initialise start of the game and scoreboards tabview
 
     t1_name = t1Name.get()
     t2_name = t2Name.get()
@@ -94,7 +129,6 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
 
     global t1ScoreFrame 
     global t2ScoreFrame
-    global teamFrames
     
     newFrame.add(t1_name)
     newFrame.add(t2_name)
@@ -213,7 +247,7 @@ nextButton.grid(row=1,column=0,columnspan = 2)
 """
 Game Tab View (contains the frames for team 1 and 2)
 """
-gameTab = ctk.CTkTabview(master = root,width = 900, height = 700)
+gameTab = ctk.CTkTabview(master = root, width = 900, height = 700, border_color = "black", fg_color= 'black' )
 
 
 root.mainloop()
