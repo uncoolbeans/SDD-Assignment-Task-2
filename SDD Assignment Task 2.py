@@ -28,7 +28,7 @@ Score frame for each team
 """
 class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team information and allows user to update game statistics for a team
     def __init__(self, master, teamName, players, teamNum):
-        super().__init__(master, width=900, height = 700)
+        super().__init__(master, width=900, height = 1000)
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
@@ -36,16 +36,23 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
 
         teamName = teamName
         teamNum = teamNum
-        players= players
-        teamRuns = 0
-        teamBalls = 0
-        teamWicket = 0
+        players = players
+        self.teamRuns = 0
+        self.teamBalls = 0
+        self.teamWicket = 0
+        self.overs = 0
+        self.addRunButtons = []
 
-        def addRuns(runs,label):
-            text = label.cget("text")
-            currentRuns = int(text)
-            newRuns = currentRuns + runs
-            label.configure(text=str(newRuns))
+        def addRuns(runs):
+            self.teamRuns += runs
+            self.overs += 1
+            self.runsLabel.configure(text=str(self.teamRuns))
+            return
+        
+        def removeRun():
+            if self.teamRuns > 0:
+                self.teamRuns -= 1
+            self.runsLabel.configure(text=str(self.teamRuns))
             return
         
         self.TeamLabel = ctk.CTkLabel(self, text= teamName, 
@@ -72,10 +79,10 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         self.emptyLabel2 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 200)
         self.emptyLabel2.grid(column = 1, row = 1, columnspan = 2)
 
-        self.runsLabel = ctk.CTkLabel(self, text = str(teamRuns),
+        self.runsLabel = ctk.CTkLabel(self, text = str(self.teamRuns),
                                       font = ("Bahnschrift SemiBold",30), 
                                       fg_color = 'grey', 
-                                      width = 100,
+                                      width = 120,
                                       height = 60,
                                       corner_radius = 10
                                       )
@@ -86,18 +93,32 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                      width = 100,
                                      height = 30,
                                      )
-        self.runsText.grid(column = 0, row = 3)
+        self.runsText.grid(column = 0, row = 3, sticky = 'w')
 
-        for runs in range(1,6):
-            self.addRunsButton = ctk.CTkButton(self, text = f"+ {runs}", 
+        for runs in range(6):
+            addRunsButton = ctk.CTkButton(self, text = f"+ {runs+1}", 
                                                 fg_color = 'grey', 
                                                 bg_color = 'transparent',
                                                 font = ("Bahnschrift SemiBold",18),
-                                                width = 100,
-                                                command = lambda runs = runs: addRuns(runs, self.runsLabel),
+                                                width = 120,
+                                                command = lambda runs = runs: addRuns(runs+1),
                                                 corner_radius=5
                                             )
-            self.addRunsButton.grid(column = 0, rows = 3+runs, pady = 3)
+            self.addRunButtons.append(addRunsButton)
+            self.addRunButtons[runs].grid(column  = 0, row = runs + 4, pady = 3, padx = 5, sticky = 'w')
+
+
+        self.removeRunsButton = ctk.CTkButton(self, text = "Remove run",
+                                              fg_color = 'red', 
+                                              bg_color = 'transparent',
+                                              font = ("Bahnschrift SemiBold",18),
+                                              width = 120,
+                                              command = removeRun,
+                                              corner_radius=5
+                                              )
+        self.removeRunsButton.grid(column = 0, row = 10, pady = 3, padx = 5, sticky  = 'w')
+
+
 
         #for count,player in enumerate(players):
         #    self.label = ctk.CTkLabel(self, text = (f"Player {count}: {player.name}"))
@@ -123,9 +144,9 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
         name = textbox.get()
         t2Players.append(name)
 
-    if '' in t2Players or '' in t1Players or t1_name == '' or t2_name == '':
-        messagebox.showerror('Input error',"Please enter all player and team names!")
-        return
+    #if '' in t2Players or '' in t1Players or t1_name == '' or t2_name == '':
+    #    messagebox.showerror('Input error',"Please enter all player and team names!")
+    #    return
     
     global t1ScoreFrame 
     global t2ScoreFrame
@@ -143,7 +164,7 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
     return
 
 
-def closeProgram():  #exits program
+def closeProgram(): #exits program
     root.quit()
     return
 
