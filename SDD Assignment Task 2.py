@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import customtkinter as ctk
 
 """
@@ -63,7 +64,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                       justify = 'left'
                                     )
         
-        self.batterLabel.grid(column = 0, row = 0)
+        self.batterLabel.grid(column = 0, row = 0, sticky = 'w')
 
         self.emptyLabel = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 550)
         self.emptyLabel.grid(column = 1, row = 0, columnspan = 2)
@@ -78,12 +79,12 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                       height = 60,
                                       corner_radius = 10
                                       )
-        self.runsLabel.grid(column = 0, row = 2, padx = 5, pady = 7)
+        self.runsLabel.grid(column = 0, row = 2, padx = 5, pady = 7, sticky = 'w')
         
         self.runsText = ctk.CTkLabel(self, text = "Runs",
-                                     font = ("Bahnschrift SemiBold",30), 
+                                     font = ("Bahnschrift SemiBold",20), 
                                      width = 100,
-                                     height = 60,
+                                     height = 30,
                                      )
         self.runsText.grid(column = 0, row = 3)
 
@@ -102,11 +103,6 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         #    self.label = ctk.CTkLabel(self, text = (f"Player {count}: {player.name}"))
         #    self.label.grid(column = 0, row = count+1)
 
-        
-            
-            
-    
-           
 def switchToNewScreen(oldFrame,newFrame): #general switch screen function
     oldFrame.forget()
     newFrame.pack()
@@ -121,12 +117,16 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
 
     for textbox in t1Entries:
         name = textbox.get()
-        t1Players.append(player(name))
+        t1Players.append(name)
 
     for textbox in t2Entries:
         name = textbox.get()
-        t2Players.append(player(name))
+        t2Players.append(name)
 
+    if '' in t2Players or '' in t1Players or t1_name == '' or t2_name == '':
+        messagebox.showerror('Input error',"Please enter all player and team names!")
+        return
+    
     global t1ScoreFrame 
     global t2ScoreFrame
     
