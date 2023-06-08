@@ -83,11 +83,18 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         
         self.batterLabel.grid(column = 0, row = 0, sticky = 'w', padx = 3)
 
-        self.emptyLabel = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 550)
-        self.emptyLabel.grid(column = 1, row = 0, columnspan = 2)
+        self.row0EmptyLabel1 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 300)
+        self.row0EmptyLabel1.grid(column = 1, row = 0)
 
-        self.emptyLabel2 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 200)
-        self.emptyLabel2.grid(column = 1, row = 1, columnspan = 2)
+        self.row0EmptyLabel2 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 300)
+        self.row0EmptyLabel2.grid(column = 2, row = 0)
+
+
+        self.row1EmptyLabel1 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 300)
+        self.row1EmptyLabel1.grid(column = 1, row = 1)
+
+        self.row1EmptyLabel1 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 300)
+        self.row1EmptyLabel1.grid(column = 2, row = 1)
 
         self.runsLabel = ctk.CTkLabel(self, text = str(self.teamRuns),
                                       font = ("Bahnschrift SemiBold",30), 
@@ -142,8 +149,8 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                        height = 30,
                                        )
 
-        self.wicketCounter.grid(column = 1, row = 2, padx = 5, pady = 3, sticky = 'w')
-        self.wicketText.grid(column = 1, row = 3, sticky = 'w')
+        self.wicketCounter.grid(column = 1, row = 2, padx = 5, pady = 3)
+        self.wicketText.grid(column = 1, row = 3)
 
         self.addWicketButton = ctk.CTkButton(self, text = 'Add Wicket',
                                              fg_color = 'grey', 
@@ -153,19 +160,18 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                              corner_radius= 5,
                                              command = lambda: addWickets(1)
                                              )
-        self.addWicketButton.grid(column = 1, row = 4, sticky = 'w ')
+        self.addWicketButton.grid(column = 1, row = 4)
 
-        self.removeWicketButton = ctk.CTkButton(self, text = 'Remove \nwicket',
+        self.removeWicketButton = ctk.CTkButton(self, text = 'Remove wicket',
                                              fg_color = 'Red', 
                                              bg_color = 'transparent',
-                                             font = ("Bahnschrift SemiBold",18),
+                                             font = ("Bahnschrift SemiBold",12),
                                              width = 120,
                                              corner_radius= 5,
                                              command = lambda: removeWickets(1),
                                              anchor = 'c'
                                              )
-        
-        self.removeWicketButton.grid(column = 1, row = 5, sticky = 'w ')
+        self.removeWicketButton.grid(column = 1, row = 5)
 
         
 
