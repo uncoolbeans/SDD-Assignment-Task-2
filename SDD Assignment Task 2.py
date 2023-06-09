@@ -37,7 +37,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         teamNum = teamNum
         players = players
         self.teamRuns = 0
-        self.teamBalls = 0
+        self.teamNoBalls = 0
         self.teamWickets = 0
         self.wideBalls = 0
         self.overs = 0
@@ -233,7 +233,23 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                  )
         wideText.pack(padx = 3, pady = 3)
         wideLabel.pack(padx = 3, pady = 3)
-        self.widesFrame.grid(column = 2, row = 4, columnspan = 2)
+        self.widesFrame.grid(column = 2, row = 4, columnspan = 2, padx = 3, pady = 3)
+
+        self.noBallFrame = ctk.CTkFrame(self)
+        noBallText = ctk.CTkLabel(self.noBallFrame, text = 'No balls',
+                                font = ("Bahnschrift SemiBold",18) 
+                                )
+        noBallLabel = ctk.CTkLabel(self.noBallFrame, text = str(self.teamNoBalls),
+                                 font = ("Bahnschrift SemiBold",20),
+                                 fg_color  = 'grey',
+                                 corner_radius = 5,
+                                 width = 100,
+                                 height = 30
+                                 )
+        noBallText.pack(padx = 3, pady = 3)
+        noBallLabel.pack(padx = 3, pady = 3)
+        self.noBallFrame.grid(column = 2, row = 5, columnspan = 2, rowspan = 2, padx = 3, pady = 3)
+
         
 
         #for count,player in enumerate(players):
