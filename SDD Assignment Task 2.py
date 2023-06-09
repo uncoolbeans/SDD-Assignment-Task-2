@@ -47,7 +47,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             self.wicketCounter.configure(text = str(self.teamWickets))
             return
         
-        def removeWickets(wickets):
+        def removeWickets(wickets): #function to remove wickets
             if self.teamWickets > 0:
                 self.teamWickets -= wickets
             self.wicketCounter.configure(text = str(self.teamWickets))
@@ -57,12 +57,14 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             self.teamRuns += runs
             self.overs += 1
             self.runsLabel.configure(text=str(self.teamRuns))
+            self.oversLabel.configure(text = str(self.overs))
             return
         
         def removeRun(): #function to be called when run removed
             if self.teamRuns > 0:
                 self.teamRuns -= 1
             self.runsLabel.configure(text=str(self.teamRuns))
+            self.oversLabel.configure(text = str(self.overs))
             return
         
         self.TeamLabel = ctk.CTkLabel(self, text= teamName, 
@@ -83,18 +85,30 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         
         self.batterLabel.grid(column = 0, row = 0, sticky = 'w', padx = 3)
 
-        self.row0EmptyLabel1 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 300)
+        self.row0EmptyLabel1 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
         self.row0EmptyLabel1.grid(column = 1, row = 0)
 
-        self.row0EmptyLabel2 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 300)
+        self.row0EmptyLabel2 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
         self.row0EmptyLabel2.grid(column = 2, row = 0)
 
+        self.row0EmptyLabel3 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
+        self.row0EmptyLabel3.grid(column = 3, row = 0)
 
-        self.row1EmptyLabel1 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 300)
+        self.row0EmptyLabel4 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
+        self.row0EmptyLabel3.grid(column = 4, row = 0)
+
+
+        self.row1EmptyLabel1 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
         self.row1EmptyLabel1.grid(column = 1, row = 1)
 
-        self.row1EmptyLabel1 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 300)
-        self.row1EmptyLabel1.grid(column = 2, row = 1)
+        self.row1EmptyLabel2 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
+        self.row1EmptyLabel2.grid(column = 2, row = 1)
+
+        self.row1EmptyLabel3 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
+        self.row1EmptyLabel3.grid(column = 3, row = 1)
+
+        self.row1EmptyLabel3 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
+        self.row1EmptyLabel3.grid(column = 4, row = 1)
 
         self.runsLabel = ctk.CTkLabel(self, text = str(self.teamRuns),
                                       font = ("Bahnschrift SemiBold",30), 
@@ -103,14 +117,15 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                       height = 60,
                                       corner_radius = 10
                                       )
-        self.runsLabel.grid(column = 0, row = 2, padx = 5, pady = 3)
         
         self.runsText = ctk.CTkLabel(self, text = "Runs",
                                      font = ("Bahnschrift SemiBold",20), 
                                      width = 100,
                                      height = 30
                                      )
-        self.runsText.grid(column = 0, row = 3)
+        
+        self.runsLabel.grid(column = 0, row = 3, padx = 5, pady = 3)
+        self.runsText.grid(column = 0, row = 2)
 
         for runs in range(6): #making add run buttons
             addRunsButton = ctk.CTkButton(self, text = f"+ {runs+1}", 
@@ -149,12 +164,13 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                        height = 30,
                                        )
 
-        self.wicketCounter.grid(column = 1, row = 2, padx = 5, pady = 3)
-        self.wicketText.grid(column = 1, row = 3)
+        self.wicketCounter.grid(column = 1, row = 3, padx = 5, pady = 3)
+        self.wicketText.grid(column = 1, row = 2)
 
         self.addWicketButton = ctk.CTkButton(self, text = 'Add Wicket',
-                                             fg_color = 'grey', 
+                                             fg_color = 'green', 
                                              bg_color = 'transparent',
+                                             text_color= 'black',
                                              font = ("Bahnschrift SemiBold",18),
                                              width = 120,
                                              corner_radius= 5,
@@ -173,8 +189,23 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                              )
         self.removeWicketButton.grid(column = 1, row = 5)
 
+        self.oversLabel = ctk.CTkLabel(self, text = f'{self.overs}',
+                                       font = ("Bahnschrift SemiBold",30), 
+                                        fg_color = 'grey', 
+                                        width = 120,
+                                        height = 60,
+                                        corner_radius = 10
+                                        )
         
-
+        self.oversText = ctk.CTkLabel(self, text = 'Overs',
+                                       font = ("Bahnschrift SemiBold",20), 
+                                       width = 100,
+                                       height = 30,
+                                       )
+        
+        self.oversLabel.grid(column = 2, row = 3, padx = 5, pady = 3)
+        self.oversText.grid(column = 2, row = 2)
+                                       
 
         #for count,player in enumerate(players):
         #    self.label = ctk.CTkLabel(self, text = (f"Player {count}: {player.name}"))
