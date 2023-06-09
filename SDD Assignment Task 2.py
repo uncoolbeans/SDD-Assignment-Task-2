@@ -27,21 +27,24 @@ class player: #creating a class for player that will be used to store the statis
 Score frame for each team
 """
 class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team information and allows user to update game statistics for a team
-    def __init__(self, master, teamName, players, teamNum):
+    def __init__(self, master, teamName, players, opposing, teamNum):
         super().__init__(master, width=900, height = 1000)
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        teamName = teamName
-        teamNum = teamNum
-        players = players
+        teamName = teamName #displayed team name
+        teamNum = teamNum 
+        self.players = players #displayed team players
+        opposing = opposing #opposing team players
         self.teamRuns = 0
         self.teamNoBalls = 0
         self.teamWickets = 0
         self.wideBalls = 0
         self.overs = 0
-        self.addRunButtons = [] 
+        self.battersOut = []
+        
+
 
         def addWickets(wickets): #function to add wickets
             self.teamWickets += wickets
@@ -67,6 +70,14 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             self.runsLabel.configure(text=str(self.teamRuns))
             return
         
+        def removeBatter():
+            batter = self.batterSelect.get()
+            bowler  = self.bowlerSelect.get()
+            self.battersOut.append([batter,bowler])
+            self.players.remove(batter)
+            self.batterSelect.configure(values = self.players)
+            return
+        
         self.TeamLabel = ctk.CTkLabel(self, text= teamName, 
                                       fg_color= 'grey', 
                                       font = ("Bahnschrift SemiBold",30), 
@@ -84,6 +95,9 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                     )
         
         self.batterLabel.grid(column = 0, row = 0, sticky = 'w', padx = 3)
+        """
+        empty labels for formatting grid system
+        """
 
         self.row0EmptyLabel1 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
         self.row0EmptyLabel1.grid(column = 2, row = 0)
@@ -180,7 +194,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         self.wicketCounter.grid(column = 1, row = 3, padx = 5, pady = 3)
         self.wicketText.grid(column = 1, row = 2)
 
-        self.addWicketButton = ctk.CTkButton(self, text = 'Add Wicket',
+        self.addWicketButton = ctk.CTkButton(self, text = 'Add wicket',
                                              fg_color = 'green', 
                                              bg_color = 'transparent',
                                              text_color= 'black',
@@ -250,6 +264,42 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         noBallLabel.pack(padx = 3, pady = 3)
         self.noBallFrame.grid(column = 2, row = 5, columnspan = 2, rowspan = 2, padx = 3, pady = 3)
 
+        self.removeBatterFrame = ctk.CTkFrame(self)
+        batterLabel = ctk.CTkLabel(self.removeBatterFrame, text = 'Batter out',
+                                   font = ("Bahnschrift SemiBold",15)
+                                   )
+        bowlerLabel = ctk.CTkLabel(self.removeBatterFrame, text = 'Bowler',
+                                   font = ("Bahnschrift SemiBold",15)
+                                   )
+        
+        batterLabel.grid(row = 0, column = 0, sticky = 'w', padx = 5)
+        bowlerLabel.grid(row = 0, column = 1, sticky = 'w', padx = 5)
+
+        self.batterSelect = ctk.CTkOptionMenu(self.removeBatterFrame, values=self.players,
+                                         width = 120,
+                                         corner_radius= 5,
+                                         font = ("Bahnschrift SemiBold",15),
+                                         fg_color = 'grey'
+                                         )
+        self.bowlerSelect = ctk.CTkOptionMenu(self.removeBatterFrame, values = opposing,
+                                         width = 120,
+                                         corner_radius= 5,
+                                         font = ("Bahnschrift SemiBold",15),
+                                         fg_color = 'grey'
+                                         )
+        self.batterSelect.grid(row = 1, column = 0, padx = 5, pady = 5)
+        self.bowlerSelect.grid(row = 1, column = 1, padx = 5, pady = 5)
+
+        batterRemoveButton = ctk.CTkButton(self.removeBatterFrame, text = 'Batter out',
+                                           fg_color = 'green',
+                                           font = ("Bahnschrift SemiBold",15),
+                                           corner_radius = 5,
+                                           width = 120,
+                                           height = 20,
+                                           command = lambda: removeBatter
+                                           )
+        batterRemoveButton.grid(row = 2, column = 0, padx = 3, pady = 3)
+        self.removeBatterFrame.grid(column = 4, row = 2, columnspan = 2, rowspan = 2)
         
 
         #for count,player in enumerate(players):
@@ -286,8 +336,8 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
     newFrame.add(t1_name)
     newFrame.add(t2_name)
 
-    t1ScoreFrame = ScoringFrame(newFrame.tab(t1_name),t1_name,t1Players,1)
-    t2ScoreFrame = ScoringFrame(newFrame.tab(t2_name),t2_name,t2Players,2)
+    t1ScoreFrame = ScoringFrame(newFrame.tab(t1_name), t1_name, t1Players, t2Players,1)
+    t2ScoreFrame = ScoringFrame(newFrame.tab(t2_name), t2_name, t2Players, t2Players,2)
 
     oldFrame.forget()
     newFrame.pack()
