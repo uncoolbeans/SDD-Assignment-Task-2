@@ -79,6 +79,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                 self.battersOut.append([batter,bowler])
                 self.players.remove(batter)
                 self.batterSelect.configure(values = self.players)
+                self.remainingBattersLabel.configure(text = f'Remaining batters:\n{len(self.players)}')
             self.batterSelect.set('Select batter')
             self.bowlerSelect.set('Select bowler')
             print(players)
@@ -307,6 +308,8 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                            command = removeBatter
                                            )
         batterRemoveButton.grid(row = 2, column = 0, padx = 3, pady = 3)
+        self.remainingBattersLabel = ctk.CTkLabel(self.removeBatterFrame, text = f'Remaining batters:\n{len(self.players)}')
+        self.remainingBattersLabel.grid(row = 2, column = 1)
         self.removeBatterFrame.grid(column = 4, row = 2, columnspan = 2, rowspan = 2)
         
 
@@ -345,7 +348,7 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
     newFrame.add(t2_name)
 
     t1ScoreFrame = ScoringFrame(newFrame.tab(t1_name), t1_name, t1Players, t2Players,1)
-    t2ScoreFrame = ScoringFrame(newFrame.tab(t2_name), t2_name, t2Players, t2Players,2)
+    t2ScoreFrame = ScoringFrame(newFrame.tab(t2_name), t2_name, t2Players, t1Players,2)
 
     oldFrame.forget()
     newFrame.pack()
