@@ -73,9 +73,15 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         def removeBatter():
             batter = self.batterSelect.get()
             bowler  = self.bowlerSelect.get()
-            self.battersOut.append([batter,bowler])
-            self.players.remove(batter)
-            self.batterSelect.configure(values = self.players)
+            if batter not in players or bowler not in opposing:
+                messagebox.showerror('Error', 'Error: Please select a valid batter and bowler!')
+            else:
+                self.battersOut.append([batter,bowler])
+                self.players.remove(batter)
+                self.batterSelect.configure(values = self.players)
+            self.batterSelect.set('Select batter')
+            self.bowlerSelect.set('Select bowler')
+            print(players)
             return
         
         self.TeamLabel = ctk.CTkLabel(self, text= teamName, 
@@ -287,6 +293,8 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                          font = ("Bahnschrift SemiBold",15),
                                          fg_color = 'grey'
                                          )
+        self.batterSelect.set('Select batter')
+        self.bowlerSelect.set('Select bowler')
         self.batterSelect.grid(row = 1, column = 0, padx = 5, pady = 5)
         self.bowlerSelect.grid(row = 1, column = 1, padx = 5, pady = 5)
 
@@ -296,7 +304,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                            corner_radius = 5,
                                            width = 120,
                                            height = 20,
-                                           command = lambda: removeBatter
+                                           command = removeBatter
                                            )
         batterRemoveButton.grid(row = 2, column = 0, padx = 3, pady = 3)
         self.removeBatterFrame.grid(column = 4, row = 2, columnspan = 2, rowspan = 2)
