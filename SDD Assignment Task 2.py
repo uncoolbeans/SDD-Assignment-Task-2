@@ -76,12 +76,23 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             if batter not in players or bowler not in opposing:
                 messagebox.showerror('Error', 'Error: Please select a valid batter and bowler!')
             else:
-                self.battersOut.append([batter,bowler])
+                self.battersOut.insert(0,[batter,bowler])
                 self.players.remove(batter)
                 self.batterSelect.configure(values = self.players)
                 self.remainingBattersLabel.configure(text = f'Remaining batters:\n{len(self.players)}')
             self.batterSelect.set('Select batter')
             self.bowlerSelect.set('Select bowler')
+
+            for row,out in enumerate(self.battersOut):
+                nameFrame = ctk.CTkFrame(self.outsFrame, height = 20, width = 210)
+                batterName = ctk.CTkLabel(nameFrame, text = out[0], width = 70)
+                middle = ctk.CTkLabel(nameFrame, text = 'out by', width = 70)
+                bowlerName = ctk.CTkLabel(nameFrame,text = out[1], width = 70)
+                batterName.grid(row = 0, column = 0, padx = 3)
+                middle.grid(row = 0, column = 1, padx = 3)
+                bowlerName.grid(row = 0, column = 2, padx = 3)
+                nameFrame.grid(row = row, column = 0, columnspan = 2, pady = 5)
+
             print(players)
             return
         
@@ -203,7 +214,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                               command = lambda: removeRuns(int(self.runOptions.get())),
                                               corner_radius=5
                                               )
-        self.removeRunsButton.grid(column = 0, row = 7, pady = 3, padx = 5)
+        self.removeRunsButton.grid(column = 0, row = 7, pady = 3, padx = 5, sticky = 'n')
 
         self.wicketCounter = ctk.CTkLabel(self, text = f'{self.teamWickets}',
                                           font = ("Bahnschrift SemiBold",30), 
@@ -403,6 +414,19 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         self.remainingBattersLabel = ctk.CTkLabel(self.removeBatterFrame, text = f'Remaining batters:\n{len(self.players)}')
         self.remainingBattersLabel.grid(row = 2, column = 1)
         self.removeBatterFrame.grid(column = 4, row = 2, columnspan = 2, rowspan = 2)
+
+        self.outsFrame = ctk.CTkScrollableFrame(self, height = 200, width = 240)
+        for row,out in enumerate(self.battersOut):
+            nameFrame = ctk.CTkFrame(self.outsFrame, height = 20, width = 210)
+            batterName = ctk.CTkLabel(nameFrame, text = out[0], width = 70)
+            middle = ctk.CTkLabel(nameFrame, text = 'out by', width = 70)
+            bowlerName = ctk.CTkLabel(nameFrame,text = out[1], width = 70)
+            batterName.grid(row = 0, column = 0, padx = 3)
+            middle.grid(row = 0, column = 1, padx = 3)
+            bowlerName.grid(row = 0, column = 2, padx = 3)
+            nameFrame.grid(row = row, column = 0, columnspan = 2, pady = 5)
+
+        self.outsFrame.grid(column = 4, row = 4, columnspan = 2, rowspan = 2, pady = 5)
         
 
         #for count,player in enumerate(players):
