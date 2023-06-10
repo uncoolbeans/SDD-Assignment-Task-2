@@ -85,6 +85,9 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             print(players)
             return
         
+        def addNoBall():
+            return
+        
         self.TeamLabel = ctk.CTkLabel(self, text= teamName, 
                                       fg_color= 'grey', 
                                       font = ("Bahnschrift SemiBold",30), 
@@ -245,7 +248,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         wideText = ctk.CTkLabel(self.widesFrame, text = 'Wide balls',
                                 font = ("Bahnschrift SemiBold",18) 
                                 )
-        wideLabel = ctk.CTkLabel(self.widesFrame, text = str(self.wideBalls),
+        self.wideLabel = ctk.CTkLabel(self.widesFrame, text = str(self.wideBalls),
                                  font = ("Bahnschrift SemiBold",20),
                                  fg_color  = 'grey',
                                  corner_radius = 5,
@@ -253,14 +256,14 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                  height = 30
                                  )
         wideText.pack(padx = 3, pady = 3)
-        wideLabel.pack(padx = 3, pady = 3)
+        self.wideLabel.pack(padx = 3, pady = 3)
         self.widesFrame.grid(column = 2, row = 4, columnspan = 2, padx = 3, pady = 3)
 
         self.noBallFrame = ctk.CTkFrame(self)
         noBallText = ctk.CTkLabel(self.noBallFrame, text = 'No balls',
                                 font = ("Bahnschrift SemiBold",18) 
                                 )
-        noBallLabel = ctk.CTkLabel(self.noBallFrame, text = str(self.teamNoBalls),
+        self.noBallLabel = ctk.CTkLabel(self.noBallFrame, text = str(self.teamNoBalls),
                                  font = ("Bahnschrift SemiBold",20),
                                  fg_color  = 'grey',
                                  corner_radius = 5,
@@ -268,8 +271,73 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                  height = 30
                                  )
         noBallText.pack(padx = 3, pady = 3)
-        noBallLabel.pack(padx = 3, pady = 3)
+        self.noBallLabel.pack(padx = 3, pady = 3)
         self.noBallFrame.grid(column = 2, row = 5, columnspan = 2, rowspan = 2, padx = 3, pady = 3)
+
+        self.buttonsFrame = ctk.CTkFrame(self)
+        addOversButton = ctk.CTkButton(self.buttonsFrame, text = '+ Over',
+                                        fg_color = 'green', 
+                                        bg_color = 'transparent',
+                                        text_color= 'black',
+                                        font = ("Bahnschrift SemiBold",18),
+                                        width = 120,
+                                        corner_radius= 5,
+                                        command = addNoBall
+                                        )
+        addOversButton.grid(column = 0, row = 0, padx = 3, pady = 5)
+        addWideBallButton = ctk.CTkButton(self.buttonsFrame, text = '+ Wide Ball',
+                                        fg_color = 'green', 
+                                        bg_color = 'transparent',
+                                        text_color= 'black',
+                                        font = ("Bahnschrift SemiBold",18),
+                                        width = 120,
+                                        corner_radius= 5,
+                                        command = addNoBall
+                                        )
+        addWideBallButton.grid(column = 0, row = 1, padx = 3, pady = 5)
+        addNoBallButton = ctk.CTkButton(self.buttonsFrame, text = '+ No Ball',
+                                        fg_color = 'green', 
+                                        bg_color = 'transparent',
+                                        text_color= 'black',
+                                        font = ("Bahnschrift SemiBold",18),
+                                        width = 120,
+                                        corner_radius= 5,
+                                        command = addNoBall
+                                        )
+        addNoBallButton.grid(column = 0, row = 2, padx = 3, pady = 5)
+        
+        removeOversButton = ctk.CTkButton(self.buttonsFrame, text = '- Over',
+                                        fg_color = 'red', 
+                                        bg_color = 'transparent',
+                                        text_color= 'black',
+                                        font = ("Bahnschrift SemiBold",18),
+                                        width = 120,
+                                        corner_radius= 5,
+                                        command = addNoBall
+                                        )
+        removeOversButton.grid(column = 1, row = 0, padx = 3, pady = 5)
+        removeWideBallButton = ctk.CTkButton(self.buttonsFrame, text = '- Wide Ball',
+                                        fg_color = 'red', 
+                                        bg_color = 'transparent',
+                                        text_color= 'black',
+                                        font = ("Bahnschrift SemiBold",18),
+                                        width = 120,
+                                        corner_radius= 5,
+                                        command = addNoBall
+                                        )
+        removeWideBallButton.grid(column = 1, row = 1, padx = 3, pady = 5)
+        removeNoBallButton = ctk.CTkButton(self.buttonsFrame, text = '- No Ball',
+                                        fg_color = 'red', 
+                                        bg_color = 'transparent',
+                                        text_color= 'black',
+                                        font = ("Bahnschrift SemiBold",18),
+                                        width = 120,
+                                        corner_radius= 5,
+                                        command = addNoBall
+                                        )
+        removeNoBallButton.grid(column = 1, row = 2, padx = 3, pady = 5)
+        
+        self.buttonsFrame.grid(column = 2, row = 7, columnspan = 2, padx = 3, pady = 5)
 
         self.removeBatterFrame = ctk.CTkFrame(self)
         batterLabel = ctk.CTkLabel(self.removeBatterFrame, text = 'Batter out',
