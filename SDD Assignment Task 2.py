@@ -42,6 +42,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         self.teamWickets = 0
         self.wideBalls = 0
         self.overs = 0
+        self.totalBalls = 0
         self.battersOut = []
         
 
@@ -59,9 +60,9 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
 
         def addRuns(runs): #function to be called when runs added
             self.teamRuns += runs
-            self.overs += 1
+            self.totalBalls += 1
             self.runsLabel.configure(text=str(self.teamRuns))
-            self.oversLabel.configure(text = str(self.overs))
+            self.ballsLabel.configure(text = str(self.totalBalls))
             return
         
         def removeRuns(runs): #function to be called when run removed
@@ -110,11 +111,11 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             self.wideLabel.configure(text = str(self.wideBalls))
             return
         
-        def addOvers(n):
-            self.overs += n
-            if self.overs < 0:
-                self.overs = 0
-            self.oversLabel.configure(text = str(self.overs))
+        def addBalls(n):
+            self.totalBalls += n
+            if self.totalBalls < 0:
+                self.totalBalls = 0
+            self.ballsLabel.configure(text = str(self.totalBalls))
             return            
         
         self.TeamLabel = ctk.CTkLabel(self, text= teamName, 
@@ -256,7 +257,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                              )
         self.removeWicketButton.grid(column = 1, row = 6)
 
-        self.oversLabel = ctk.CTkLabel(self, text = f'{self.overs}',
+        self.ballsLabel = ctk.CTkLabel(self, text = f'{self.totalBalls}',
                                        font = ("Bahnschrift SemiBold",30), 
                                         fg_color = 'grey', 
                                         width = 120,
@@ -264,14 +265,14 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                         corner_radius = 10
                                         )
         
-        self.oversText = ctk.CTkLabel(self, text = 'Overs',
+        self.ballsText = ctk.CTkLabel(self, text = 'Balls',
                                        font = ("Bahnschrift SemiBold",30), 
                                        width = 100,
                                        height = 30,
                                        )
         
-        self.oversLabel.grid(column = 2, row = 3, padx = 5, pady = 3, columnspan = 2)
-        self.oversText.grid(column = 2, row = 2, columnspan = 2)
+        self.ballsLabel.grid(column = 2, row = 3, padx = 5, pady = 3, columnspan = 2)
+        self.ballsText.grid(column = 2, row = 2, columnspan = 2)
                                        
         self.widesFrame = ctk.CTkFrame(self)
         wideText = ctk.CTkLabel(self.widesFrame, text = 'Wide balls',
@@ -306,16 +307,16 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         self.noBallFrame.grid(column = 2, row = 5, columnspan = 2, rowspan = 2, padx = 3, pady = 3)
 
         self.buttonsFrame = ctk.CTkFrame(self)
-        addOversButton = ctk.CTkButton(self.buttonsFrame, text = '+ Over',
+        addBallsButton = ctk.CTkButton(self.buttonsFrame, text = '+ Balls',
                                         fg_color = 'green', 
                                         bg_color = 'transparent',
                                         text_color= 'black',
                                         font = ("Bahnschrift SemiBold",18),
                                         width = 120,
                                         corner_radius= 5,
-                                        command = lambda: addOvers(1)
+                                        command = lambda: addBalls(1)
                                         )
-        addOversButton.grid(column = 0, row = 0, padx = 3, pady = 5)
+        addBallsButton.grid(column = 0, row = 0, padx = 3, pady = 5)
 
         addWideBallButton = ctk.CTkButton(self.buttonsFrame, text = '+ Wide Ball',
                                         fg_color = 'green', 
@@ -339,16 +340,16 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                         )
         addNoBallButton.grid(column = 0, row = 2, padx = 3, pady = 5)
         
-        removeOversButton = ctk.CTkButton(self.buttonsFrame, text = '- Over',
+        removeBallsButton = ctk.CTkButton(self.buttonsFrame, text = '- Ball',
                                         fg_color = 'red', 
                                         bg_color = 'transparent',
                                         text_color= 'black',
                                         font = ("Bahnschrift SemiBold",18),
                                         width = 120,
                                         corner_radius= 5,
-                                        command = lambda: addOvers(-1)
+                                        command = lambda: addBalls(-1)
                                         )
-        removeOversButton.grid(column = 1, row = 0, padx = 3, pady = 5)
+        removeBallsButton.grid(column = 1, row = 0, padx = 3, pady = 5)
 
         removeWideBallButton = ctk.CTkButton(self.buttonsFrame, text = '- Wide Ball',
                                         fg_color = 'red', 
