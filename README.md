@@ -10,6 +10,9 @@ Each ball should result in either a hit (with an amount of runs attached), a wid
 The program should keep track of overs, providing indication when it’s time to swap ends. It should also keep track of outs, 
 storing the bowler’s name whenever a batter gets out.
 
+The score tracking program is written in Python, using tkinter and customtkinter modules to create a functional and good looking GUI, making
+use of the variety of widgets and functions in the modules allow for creative Ui design.
+
 Assessment Notification:
 https://docs.google.com/document/d/100USxqvRZlFTJRk7exb_-Ka7tHNJzmLpmFUz3c1ly7E/edit
 
