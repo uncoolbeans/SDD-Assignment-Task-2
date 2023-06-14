@@ -101,7 +101,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             self.teamNoBalls += n
             self.teamRuns += n
             if self.teamRuns < 0:
-                self.teamBalls = 0
+                self.teamRuns = 0
             if self.teamNoBalls < 0:
                 self.teamNoBalls = 0
             self.noBallLabel.configure(text = str(self.teamNoBalls))
@@ -112,7 +112,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             self.wideBalls += n
             self.teamRuns += n
             if self.teamRuns < 0:
-                self.teamBalls = 0
+                self.teamRuns = 0
             if self.wideBalls < 0:
                 self.wideBalls = 0
             self.wideLabel.configure(text = str(self.wideBalls))
