@@ -63,6 +63,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             self.totalBalls += 1
             self.runsLabel.configure(text=str(self.teamRuns))
             self.ballsLabel.configure(text = str(self.totalBalls))
+            self.oversIndicator.configure(text = str(round((self.totalBalls/6),2)))
             return
         
         def removeRuns(runs): #function to be called when run removed
@@ -81,6 +82,8 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                 self.players.remove(batter)
                 self.batterSelect.configure(values = self.players)
                 self.remainingBattersLabel.configure(text = f'Remaining batters:\n{len(self.players)}')
+                if len(players) == 0:
+                    messagebox.showerror('Swap batting teams', 'All batters are out, swap batting teams!')
             self.batterSelect.set('Select batter')
             self.bowlerSelect.set('Select bowler')
 
@@ -124,6 +127,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             if self.totalBalls < 0:
                 self.totalBalls = 0
             self.ballsLabel.configure(text = str(self.totalBalls))
+            self.oversIndicator.configure(text = str(round((self.totalBalls/6),2)))
             return            
         
         self.TeamLabel = ctk.CTkLabel(self, text= teamName, 
@@ -156,8 +160,13 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         self.row0EmptyLabel3 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
         self.row0EmptyLabel3.grid(column = 4, row = 0)
 
-        self.row0EmptyLabel4 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
-        self.row0EmptyLabel3.grid(column = 5, row = 0)
+        self.oversText = ctk.CTkLabel(self, text= 'Overs', 
+                                            font = ("Bahnschrift SemiBold",20),
+                                            fg_color = 'transparent', 
+                                            bg_color = 'transparent', 
+                                            width = 150)
+        
+        self.oversText.grid(column = 5, row = 0)
 
 
         self.row1EmptyLabel1 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
@@ -169,8 +178,14 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         self.row1EmptyLabel3 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
         self.row1EmptyLabel3.grid(column = 4, row = 1)
 
-        self.row1EmptyLabel3 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
-        self.row1EmptyLabel3.grid(column = 5, row = 1)
+        self.oversIndicator = ctk.CTkLabel(self, text = str(round((self.totalBalls/6),2)), 
+                                            font = ("Bahnschrift SemiBold",30),
+                                            fg_color = 'grey',
+                                            corner_radius= 5,
+                                            bg_color = 'transparent', 
+                                            width = 150,
+                                            height = 50)
+        self.oversIndicator.grid(column = 5, row = 1)
 
         self.runsLabel = ctk.CTkLabel(self, text = str(self.teamRuns),
                                       font = ("Bahnschrift SemiBold",30), 
