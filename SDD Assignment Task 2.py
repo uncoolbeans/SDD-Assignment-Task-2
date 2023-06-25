@@ -27,7 +27,7 @@ class player: #creating a class for player that will be used to store the statis
 Score frame for each team
 """
 class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team information and allows user to update game statistics for a team
-    def __init__(self, master, teamName, players, opposing, teamNum):
+    def __init__(self, master, teamName, playersEntries, opposingEntries, teamNum):
         super().__init__(master, width=900, height = 1000)
 
         self.grid_rowconfigure(0, weight=1)
@@ -35,8 +35,17 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
 
         teamName = teamName #displayed team name
         teamNum = teamNum 
-        self.players = players #displayed team players
-        opposing = opposing #opposing team players
+        self.players = [] #displayed team players
+        self.opposing = [] #opposing team players
+
+        for textbox in playersEntries:
+            name = textbox.get()
+            self.players.append(name)
+
+        for textbox in opposingEntries:
+            name = textbox.get()
+            self.opposing.append(name)
+
         self.teamRuns = 0
         self.teamNoBalls = 0
         self.teamWickets = 0
@@ -45,8 +54,6 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         self.totalBalls = 0
         self.battersOut = []
         
-
-
         def addWickets(wickets): #function to add wickets
             self.teamWickets += wickets
             self.wicketCounter.configure(text = str(self.teamWickets))
@@ -75,15 +82,20 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         def removeBatter():
             batter = self.batterSelect.get()
             bowler  = self.bowlerSelect.get()
-            if batter not in players or bowler not in opposing:
+            if batter not in self.players or bowler not in self.opposing:
                 messagebox.showerror('Error', 'Error: Please select a valid batter and bowler!')
+                print(teamNum)
+                print(self.players)
+                print(self.opposing)
+
             else:
                 self.battersOut.insert(0,[batter,bowler])
                 self.players.remove(batter)
                 self.batterSelect.configure(values = self.players)
                 self.remainingBattersLabel.configure(text = f'Remaining batters:\n{len(self.players)}')
-                if len(players) == 0:
-                    messagebox.showerror('Swap batting teams', 'All batters are out, swap batting teams!')
+                if len(self.players) == 0:
+                    messagebox.showwarning('Swap batting teams', 'All batters are out, swap batting teams!')
+
             self.batterSelect.set('Select batter')
             self.bowlerSelect.set('Select bowler')
 
@@ -96,8 +108,6 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                 middle.grid(row = 0, column = 1, padx = 3)
                 bowlerName.grid(row = 0, column = 2, padx = 3)
                 nameFrame.grid(row = row, column = 0, columnspan = 2, pady = 5)
-
-            print(players)
             return
         
         def addNoBall(n):
@@ -415,7 +425,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                          font = ("Bahnschrift SemiBold",15),
                                          fg_color = 'grey'
                                          )
-        self.bowlerSelect = ctk.CTkOptionMenu(self.removeBatterFrame, values = opposing,
+        self.bowlerSelect = ctk.CTkOptionMenu(self.removeBatterFrame, values = self.opposing,
                                          width = 120,
                                          corner_radius= 5,
                                          font = ("Bahnschrift SemiBold",15),
@@ -457,7 +467,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         #    self.label = ctk.CTkLabel(self, text = (f"Player {count}: {player.name}"))
         #    self.label.grid(column = 0, row = count+1)
 
-def switchToNewScreen(oldFrame,newFrame): #general switch screen function
+def switchToNewScreen(oldFrame,newFrame): #general purpose switch screen function
     oldFrame.forget()
     newFrame.pack()
     return
@@ -487,8 +497,8 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
     newFrame.add(t1_name)
     newFrame.add(t2_name)
 
-    t1ScoreFrame = ScoringFrame(newFrame.tab(t1_name), t1_name, t1Players, t2Players,1)
-    t2ScoreFrame = ScoringFrame(newFrame.tab(t2_name), t2_name, t2Players, t1Players,2)
+    t1ScoreFrame = ScoringFrame(newFrame.tab(t1_name), t1_name, t1Entries, t2Entries,1)
+    t2ScoreFrame = ScoringFrame(newFrame.tab(t2_name), t2_name, t2Entries, t1Entries,2)
 
     oldFrame.forget()
     newFrame.pack()
@@ -601,7 +611,11 @@ nextButton.grid(row=1,column=0,columnspan = 2)
 """
 Game Tab View (contains the frames for team 1 and 2)
 """
-gameTab = ctk.CTkTabview(master = root, width = 900, height = 700, border_color = "black", fg_color= 'black' )
+gameTab = ctk.CTkTabview(master = root, width = 900, height = 700, border_color = "black", fg_color= 'black' ) #tabview that nests the scoring frames
+
+class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the scoring
+    def __init__(self, master, team1, team2):
+        super().__init__(master, width=900, height = 1000)
 
 
 root.mainloop()
