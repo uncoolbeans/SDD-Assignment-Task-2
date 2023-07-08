@@ -17,6 +17,12 @@ root.title('Cricket Scorecard')
 ctk.set_appearance_mode("dark")
 root.geometry("900x700")
 
+
+"""
+Game Tab View (contains the frames for team 1 and 2)
+"""
+gameTab = ctk.CTkTabview(master = root, width = 900, height = 700, border_color = "black", fg_color= 'black' )
+
 class player: #creating a class for player that will be used to store the statistics of each player later on
     def __init__(self,name):
         self.name = name
@@ -26,6 +32,9 @@ class player: #creating a class for player that will be used to store the statis
 """
 Score frame for each team
 """
+t1ScoreFrame = None
+t2ScoreFrame = None
+
 class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team information and allows user to update game statistics for a team
     def __init__(self, master, teamName, playersEntries, opposingEntries, teamNum):
         super().__init__(master, width=900, height = 1000)
@@ -53,6 +62,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         self.overs = 0
         self.totalBalls = 0
         self.battersOut = []
+        global gameTab
         
         def addWickets(wickets): #function to add wickets
             self.teamWickets += wickets
@@ -462,10 +472,14 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
 
         self.outsFrame.grid(column = 4, row = 4, columnspan = 2, rowspan = 2, pady = 5)
         
-
-        #for count,player in enumerate(players):
-        #    self.label = ctk.CTkLabel(self, text = (f"Player {count}: {player.name}"))
-        #    self.label.grid(column = 0, row = count+1)
+        endButton = ctk.CTkButton(self, text = 'End Game',
+                                  font = ("Bahnschrift SemiBold",20),
+                                  height = 50, width = 150,
+                                  corner_radius=5,
+                                  fg_color='red',
+                                  command = endGame
+                                  )
+        endButton.grid(column = 4, row = 7)
 
 def switchToNewScreen(oldFrame,newFrame): #general purpose switch screen function
     oldFrame.forget()
@@ -493,20 +507,30 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
     
     global t1ScoreFrame 
     global t2ScoreFrame
+    global gameTab
     
-    newFrame.add(t1_name)
-    newFrame.add(t2_name)
+    gameTab.add(t1_name)
+    gameTab.add(t2_name)
 
-    t1ScoreFrame = ScoringFrame(newFrame.tab(t1_name), t1_name, t1Entries, t2Entries,1)
-    t2ScoreFrame = ScoringFrame(newFrame.tab(t2_name), t2_name, t2Entries, t1Entries,2)
+    t1ScoreFrame = ScoringFrame(gameTab.tab(t1_name), t1_name, t1Entries, t2Entries,1)
+    t2ScoreFrame = ScoringFrame(gameTab.tab(t2_name), t2_name, t2Entries, t1Entries,2)
 
-    oldFrame.forget()
-    newFrame.pack()
+    oldFrame.forget()   
+    gameTab.pack()
     t2ScoreFrame.pack()
     t1ScoreFrame.pack()
     return
 
+def endGame():
 
+    global t1ScoreFrame
+    global t2ScoreFrame
+    global gameTab
+
+    endFrame = gameEndScreen(root,t1ScoreFrame,t2ScoreFrame)
+    gameTab.forget()
+    endFrame.pack()
+    
 def closeProgram(): #exits program
     root.quit()
     return
@@ -607,15 +631,13 @@ nextButton = ctk.CTkButton(entryScreen,text='Next',
 
 nextButton.grid(row=1,column=0,columnspan = 2)
 
-
-"""
-Game Tab View (contains the frames for team 1 and 2)
-"""
-gameTab = ctk.CTkTabview(master = root, width = 900, height = 700, border_color = "black", fg_color= 'black' ) #tabview that nests the scoring frames
-
 class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the scoring
     def __init__(self, master, team1, team2):
         super().__init__(master, width=900, height = 1000)
+
+        self.testLabel = ctk.CTkLabel(self,text = team1.teamRuns) #test code, remove this later
+        self.testLabel.pack()
+
 
 
 root.mainloop()
