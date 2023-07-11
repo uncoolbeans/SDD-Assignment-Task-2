@@ -42,7 +42,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        teamName = teamName #displayed team name
+        self.teamName = teamName #displayed team name
         teamNum = teamNum 
         self.players = [] #displayed team players
         self.opposing = [] #opposing team players
@@ -150,7 +150,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             self.oversIndicator.configure(text = str(round((self.totalBalls/6),2)))
             return            
         
-        self.TeamLabel = ctk.CTkLabel(self, text= teamName, 
+        self.TeamLabel = ctk.CTkLabel(self, text= self.teamName, 
                                       fg_color= 'grey', 
                                       font = ("Bahnschrift SemiBold",30), 
                                       width= 300, height = 50, 
@@ -634,9 +634,66 @@ nextButton.grid(row=1,column=0,columnspan = 2)
 class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the scoring
     def __init__(self, master, team1, team2):
         super().__init__(master, width=900, height = 1000)
+        self.team1Data = team1
+        self.team2Data = team2
 
-        self.testLabel = ctk.CTkLabel(self,text = team1.teamRuns) #test code, remove this later
-        self.testLabel.pack()
+        self.scoreText = ctk.CTkLabel(self, text = 'Scores',
+                                      font = ("Bahnschrift SemiBold",30),
+                                      width = 900,
+                                      height = 100, 
+                                      corner_radius=5,
+                                      fg_color='grey')
+        
+        self.scoreText.grid(row = 0, column = 0, columnspan = 4, pady = 5)
+
+        self.teamOneFrame = ctk.CTkFrame(master=self, width = 400, height = 800)
+        teamOneLabel = ctk.CTkLabel(self.teamOneFrame, width = 150, height = 30, 
+                                    text = self.team1Data.teamName,
+                                    font = ("Bahnschrift SemiBold",20),
+                                    fg_color = 'grey',
+                                    corner_radius = 5
+                                    )
+        teamOneLabel.grid(column = 0, row = 0, sticky = 'w')
+
+        self.outsFrame = ctk.CTkScrollableFrame(self.teamOneFrame, height = 500, width = 400)
+        for row,out in enumerate(self.team1Data.battersOut):
+            nameFrame = ctk.CTkFrame(self.outsFrame, height = 20, width = 300)
+            batterName = ctk.CTkLabel(nameFrame, text = out[0], width = 100)
+            middle = ctk.CTkLabel(nameFrame, text = 'out by', width = 100)
+            bowlerName = ctk.CTkLabel(nameFrame,text = out[1], width = 100)
+            batterName.grid(row = 0, column = 0, padx = 3)
+            middle.grid(row = 0, column = 1, padx = 3)
+            bowlerName.grid(row = 0, column = 2, padx = 3)
+            nameFrame.grid(row = row, column = 0, columnspan = 2, pady = 5)
+
+        self.outsFrame.grid(column = 0, row = 1, columnspan = 2, rowspan = 2, pady = 5)
+
+        self.teamOneFrame.grid(row= 1, column = 0, columnspan = 2)
+
+        self.teamTwoFrame = ctk.CTkFrame(master=self, width = 400, height = 800)
+        teamTwoLabel = ctk.CTkLabel(self.teamTwoFrame, width = 150, height = 30, 
+                                    text = self.team2Data.teamName,
+                                    font = ("Bahnschrift SemiBold",20),
+                                    fg_color = 'grey',
+                                    corner_radius = 5
+                                    )
+        teamTwoLabel.grid(column = 0, row = 0, sticky = 'w')
+
+        self.outsFrame = ctk.CTkScrollableFrame(self.teamTwoFrame, height = 500, width = 400)
+        for row,out in enumerate(self.team2Data.battersOut):
+            nameFrame = ctk.CTkFrame(self.outsFrame, height = 20, width = 300)
+            batterName = ctk.CTkLabel(nameFrame, text = out[0], width = 100)
+            middle = ctk.CTkLabel(nameFrame, text = 'out by', width = 100)
+            bowlerName = ctk.CTkLabel(nameFrame,text = out[1], width = 100)
+            batterName.grid(row = 0, column = 0, padx = 3)
+            middle.grid(row = 0, column = 1, padx = 3)
+            bowlerName.grid(row = 0, column = 2, padx = 3)
+            nameFrame.grid(row = row, column = 0, columnspan = 2, pady = 5)
+
+        self.outsFrame.grid(column = 0, row = 1, columnspan = 2, rowspan = 2, pady = 5)
+
+        self.teamTwoFrame.grid(row= 1, column = 2, columnspan = 2)
+
 
 
 
