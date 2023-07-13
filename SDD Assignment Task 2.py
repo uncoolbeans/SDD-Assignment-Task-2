@@ -651,6 +651,8 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
             def __init__(self, master, teamData):
                 super().__init__(master, width=400, height = 800)
 
+                
+
                 self.teamData = teamData
 
                 teamOneLabel = ctk.CTkLabel(self, width = 150, height = 30, 
@@ -661,12 +663,16 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
                                     )
                 teamOneLabel.grid(column = 0, row = 0, sticky = 'w')
 
-                self.outsFrame = ctk.CTkScrollableFrame(self, height = 250, width = 400)
+                self.outsFrame = ctk.CTkScrollableFrame(self, height = 250, width = 400,
+                                                         border_color='grey',
+                                                         border_width = 5)
                 for row,out in enumerate(self.teamData.battersOut):
-                    nameFrame = ctk.CTkFrame(self.outsFrame, height = 20, width = 300)
-                    batterName = ctk.CTkLabel(nameFrame, text = out[0], width = 100)
-                    middle = ctk.CTkLabel(nameFrame, text = 'out by', width = 100)
-                    bowlerName = ctk.CTkLabel(nameFrame,text = out[1], width = 100)
+                    nameFrame = ctk.CTkFrame(self.outsFrame, height = 30, width = 390,
+                                             border_color = 'black',
+                                             border_width = 2)
+                    batterName = ctk.CTkLabel(nameFrame, text = out[0], width = 130, height = 15, pady = 0)
+                    middle = ctk.CTkLabel(nameFrame, text = 'out by', width = 130, height = 15, pady = 0)
+                    bowlerName = ctk.CTkLabel(nameFrame,text = out[1], width = 130, height = 15, pady = 0)
                     batterName.grid(row = 0, column = 0, padx = 3)
                     middle.grid(row = 0, column = 1, padx = 3)
                     bowlerName.grid(row = 0, column = 2, padx = 3)
@@ -684,6 +690,12 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
                                                     font = ("Bahnschrift SemiBold",25),
                                                     height = 25, width = 150)
                 self.totalsIndicator.grid(column = 1, row = 3, padx = 5, pady = 5, sticky = 'e')
+
+                self.legend = ctk.CTkLabel(self, text = 'Runs/Wickets',
+                                           font = ("Bahnschrift",15),
+                                           height = 18, width = 100
+                                           )
+                self.legend.grid(column = 0, row = 4, padx = 5, pady = 5, sticky = 'w')
                 
 
         self.teamOneFrame = teamDataSubFrame(self, self.team1Data)
