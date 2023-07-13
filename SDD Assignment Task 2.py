@@ -674,6 +674,18 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
 
                 self.outsFrame.grid(column = 0, row = 1, columnspan = 2, rowspan = 2, pady = 5)
 
+                self.totalsLabel = ctk.CTkLabel(self, text = 'Total:',
+                                                font = ("Bahnschrift SemiBold",20),
+                                                height = 25, width = 100
+                                                )
+                self.totalsLabel.grid(column = 0, row =  3, padx = 5, pady = 5, sticky = 'w')
+
+                self.totalsIndicator = ctk.CTkLabel(self, text = f'{self.teamData.teamRuns}/{self.teamData.teamWickets}',
+                                                    font = ("Bahnschrift SemiBold",25),
+                                                    height = 25, width = 150)
+                self.totalsIndicator.grid(column = 1, row = 3, padx = 5, pady = 5, sticky = 'e')
+                
+
         self.teamOneFrame = teamDataSubFrame(self, self.team1Data)
         self.teamTwoFrame = teamDataSubFrame(self, self.team2Data)
         self.teamOneFrame.grid(row= 1, column = 0, columnspan = 2)
