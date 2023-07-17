@@ -689,13 +689,26 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
                 self.totalsIndicator = ctk.CTkLabel(self, text = f'{self.teamData.teamRuns}/{self.teamData.teamWickets}',
                                                     font = ("Bahnschrift SemiBold",25),
                                                     height = 25, width = 150)
-                self.totalsIndicator.grid(column = 1, row = 3, padx = 5, pady = 5, sticky = 'e')
+                self.totalsIndicator.grid(column = 1, row = 3, padx = 5, pady = 5, sticky = 'e', rowspan = 2)
 
                 self.legend = ctk.CTkLabel(self, text = 'Runs/Wickets',
                                            font = ("Bahnschrift",15),
                                            height = 18, width = 100
                                            )
                 self.legend.grid(column = 0, row = 4, padx = 5, pady = 5, sticky = 'w')
+
+                self.wideBallsLabel = ctk.CTkLabel(self, text = 'Wide balls:',
+                                                   font = ("Bahnschrift SemiBold",20),
+                                                   height = 25, width = 150,
+
+                                                   )
+                self.wideBallsLabel.grid(column = 0, row = 5, padx = 5, pady = 5, sticky = 'w')
+
+                self.wideBallsIndicator = ctk.CTkLabel(self, text = self.teamData.wideBalls,
+                                                       font = ("Bahnschrift SemiBold",25),
+                                                       height = 25, width = 150
+                                                       )
+                self.wideBallsIndicator.grid(column = 1, row = 5, padx = 5, pady = 5, sticky = 'e')
                 
 
         self.teamOneFrame = teamDataSubFrame(self, self.team1Data)
