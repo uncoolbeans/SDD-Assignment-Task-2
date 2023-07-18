@@ -695,12 +695,11 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
                                            font = ("Bahnschrift",15),
                                            height = 18, width = 100
                                            )
-                self.legend.grid(column = 0, row = 4, padx = 5, pady = 5, sticky = 'w')
+                self.legend.grid(column = 0, row = 4, padx = 5, pady = 0, sticky = 'w')
 
                 self.wideBallsLabel = ctk.CTkLabel(self, text = 'Wide balls:',
                                                    font = ("Bahnschrift SemiBold",20),
-                                                   height = 25, width = 150,
-
+                                                   height = 25, width = 100
                                                    )
                 self.wideBallsLabel.grid(column = 0, row = 5, padx = 5, pady = 5, sticky = 'w')
 
@@ -709,7 +708,17 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
                                                        height = 25, width = 150
                                                        )
                 self.wideBallsIndicator.grid(column = 1, row = 5, padx = 5, pady = 5, sticky = 'e')
-                
+
+                self.noBallsLabel = ctk.CTkLabel(self, text = 'No Balls:',
+                                                font = ("Bahnschrift SemiBold",20),
+                                                height = 25, width = 100
+                                                )
+                self.noBallsLabel.grid(column = 0, row = 6, padx = 5, pady = 5, sticky = 'w')
+                self.noBallsIndicator = ctk.CTkLabel(self, text = self.teamData.teamNoBalls,
+                                                     font = ("Bahnschrift SemiBold",25),
+                                                     height = 25, width = 150
+                                                     )
+                self.noBallsIndicator.grid(column = 1, row = 6, padx = 5, pady = 5, sticky = 'e')
 
         self.teamOneFrame = teamDataSubFrame(self, self.team1Data)
         self.teamTwoFrame = teamDataSubFrame(self, self.team2Data)
