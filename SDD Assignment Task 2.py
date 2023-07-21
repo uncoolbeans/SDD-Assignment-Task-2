@@ -32,7 +32,7 @@ class player: #creating a class for player that will be used to store the statis
 """
 Score frame for each team
 """
-t1ScoreFrame = None
+t1ScoreFrame = None #global variables to serve as variables for storing the score frames
 t2ScoreFrame = None
 
 class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team information and allows user to update game statistics for a team
@@ -91,7 +91,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             self.runsLabel.configure(text=str(self.teamRuns))
             return
         
-        def removeBatter():
+        def removeBatter(): #function to remove batter
             batter = self.batterSelect.get()
             bowler  = self.bowlerSelect.get()
             if batter not in self.players or bowler not in self.opposing:
@@ -111,7 +111,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             self.batterSelect.set('Select batter')
             self.bowlerSelect.set('Select bowler')
 
-            for row,out in enumerate(self.battersOut):
+            for row,out in enumerate(self.battersOut): #refreshing the display of batter outs
                 nameFrame = ctk.CTkFrame(self.outsFrame, height = 20, width = 210)
                 batterName = ctk.CTkLabel(nameFrame, text = out[0], width = 70)
                 middle = ctk.CTkLabel(nameFrame, text = 'out by', width = 70)
@@ -122,7 +122,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                 nameFrame.grid(row = row, column = 0, columnspan = 2, pady = 5)
             return
         
-        def addNoBall(n):
+        def addNoBall(n): #function to add/subtract the number of no balls
             self.teamNoBalls += n
             self.teamRuns += n
             if self.teamRuns < 0:
@@ -133,7 +133,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             self.runsLabel.configure(text = str(self.teamRuns))
             return
         
-        def addWideBall(n):
+        def addWideBall(n): #function to add/subtract the number of wide balls
             self.wideBalls += n
             self.teamRuns += n
             if self.teamRuns < 0:
@@ -144,7 +144,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
             self.runsLabel.configure(text = str(self.teamRuns))
             return
         
-        def addBalls(n):
+        def addBalls(n): #add/subtract total balls
             self.totalBalls += n
             if self.totalBalls < 0:
                 self.totalBalls = 0
@@ -231,7 +231,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                                )
         self.runsLabelSeperator.grid(column= 0, row = 4)
 
-        self.runOptions = ctk.CTkOptionMenu(self, values = ['1','2','3','4','6'],
+        self.runOptions = ctk.CTkOptionMenu(self, values = ['1','2','3','4','6'], #options menu to choose the number of runs to add/subtract
                                             width = 120,
                                             corner_radius= 5,
                                             font = ("Bahnschrift SemiBold",15),
@@ -511,7 +511,8 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
     global t1ScoreFrame 
     global t2ScoreFrame
     global gameTab
-    
+
+    #adding game screens to the tabview
     gameTab.add(t1_name)
     gameTab.add(t2_name)
 
@@ -524,13 +525,13 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
     t1ScoreFrame.pack()
     return
 
-def endGame():
+def endGame(): #special function to consolidate all data and display end game screen
 
     global t1ScoreFrame
     global t2ScoreFrame
     global gameTab
 
-    endFrame = gameEndScreen(root,t1ScoreFrame,t2ScoreFrame)
+    endFrame = gameEndScreen(root,t1ScoreFrame,t2ScoreFrame) #loading endGame screen and removing previous screen
     gameTab.forget()
     endFrame.pack()
     
