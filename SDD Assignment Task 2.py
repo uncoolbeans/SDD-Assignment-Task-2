@@ -198,7 +198,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         self.row1EmptyLabel3 = ctk.CTkLabel(self, text= '', fg_color = 'transparent', bg_color = 'transparent', width = 150)
         self.row1EmptyLabel3.grid(column = 4, row = 1)
 
-        self.oversIndicator = ctk.CTkLabel(self, text = str(round((self.totalBalls/6),2)), 
+        self.oversIndicator = ctk.CTkLabel(self, text = str(round((self.totalBalls/6),1)), 
                                             font = ("Bahnschrift SemiBold",30),
                                             fg_color = 'grey',
                                             corner_radius= 5,
@@ -477,6 +477,7 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
                                   height = 50, width = 150,
                                   corner_radius=5,
                                   fg_color='red',
+                                  text_color= 'black',
                                   command = endGame
                                   )
         endButton.grid(column = 4, row = 7)
@@ -501,9 +502,9 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
         name = textbox.get()
         t2Players.append(name)
 
-    #if '' in t2Players or '' in t1Players or t1_name == '' or t2_name == '':
-    #    messagebox.showerror('Input error',"Please enter all player and team names!")
-    #    return
+    if '' in t2Players or '' in t1Players or t1_name == '' or t2_name == '':
+        messagebox.showerror('Input error',"Please enter all player and team names!")
+        return
     
     global t1ScoreFrame 
     global t2ScoreFrame
@@ -722,9 +723,24 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
 
         self.teamOneFrame = teamDataSubFrame(self, self.team1Data)
         self.teamTwoFrame = teamDataSubFrame(self, self.team2Data)
-        self.teamOneFrame.grid(row= 1, column = 0, columnspan = 2)
-        self.teamTwoFrame.grid(row= 1, column = 2, columnspan = 2)
+        self.teamOneFrame.grid(row= 1, column = 0, columnspan = 2, pady = 5)
+        self.teamTwoFrame.grid(row= 1, column = 2, columnspan = 2, pady = 5)
 
+        if self.team1Data.teamRuns > self.team2Data.teamRuns: #case where team 1 wins
+            diff = self.team1Data.teamRuns - self.team2Data.teamRuns
+            self.winnersLabel = ctk.CTkLabel(self,text = f'Team 1 wins by {diff} runs!',
+                                             font = ("Bahnschrift SemiBold",35),
+                                             height = 50, width = 500
+                                             )
+
+        elif self.team2Data.teamRuns > self.team1Data.teamRuns: #case where team 2 wins
+            diff = self.team2Data.teamRuns - self.team1Data.teamRuns
+            self.winnersLabel = ctk.CTkLabel(self,text = f'Team 2 wins by {diff} runs!',
+                                             font = ("Bahnschrift SemiBold",35),
+                                             height = 50, width = 500
+                                             )
+
+        self.winnersLabel.grid(column = 0, row = 2, columnspan = 4, padx = 5, pady = 5, rowspan = 2)
 
 
 
