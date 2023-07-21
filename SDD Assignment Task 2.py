@@ -65,6 +65,8 @@ class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team info
         global gameTab
         
         def addWickets(wickets): #function to add wickets
+            if self.teamWickets == 10:
+                return
             self.teamWickets += wickets
             self.wicketCounter.configure(text = str(self.teamWickets))
             return
