@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
 import customtkinter as ctk
+import sys 
+import os
 
 """
 Topic: Doing a software that helps keep score for cricket games
@@ -21,7 +23,7 @@ root.geometry("900x700")
 """
 Game Tab View (contains the frames for team 1 and 2)
 """
-gameTab = ctk.CTkTabview(master = root, width = 900, height = 700, border_color = "black", fg_color= 'black' )
+gameTab = None
 
 class player: #creating a class for player that will be used to store the statistics of each player later on
     def __init__(self,name):
@@ -34,6 +36,7 @@ Score frame for each team
 """
 t1ScoreFrame = None #global variables to serve as variables for storing the score frames
 t2ScoreFrame = None
+endFrame = None
 
 class ScoringFrame(ctk.CTkFrame): #This is the frame that displays the team information and allows user to update game statistics for a team
     def __init__(self, master, teamName, playersEntries, opposingEntries, teamNum):
@@ -511,6 +514,10 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
     global t1ScoreFrame 
     global t2ScoreFrame
     global gameTab
+    
+    gameTab = None
+    gameTab = ctk.CTkTabview(master = root, width = 900, height = 700, border_color = "black", fg_color= 'black' )
+
 
     #adding game screens to the tabview
     gameTab.add(t1_name)
@@ -530,6 +537,7 @@ def endGame(): #special function to consolidate all data and display end game sc
     global t1ScoreFrame
     global t2ScoreFrame
     global gameTab
+    global endFrame
 
     endFrame = gameEndScreen(root,t1ScoreFrame,t2ScoreFrame) #loading endGame screen and removing previous screen
     gameTab.forget()
@@ -538,6 +546,12 @@ def endGame(): #special function to consolidate all data and display end game sc
 def closeProgram(): #exits program
     root.quit()
     return
+
+def restart(): #restarts program from start
+    global menuScreen
+    global endFrame
+    endFrame.forget()
+    menuScreen.pack()
 
 
 team1Players = []
@@ -744,6 +758,9 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
                                              )
 
         self.winnersLabel.grid(column = 0, row = 2, columnspan = 4, padx = 5, pady = 5, rowspan = 2)
+
+        self.restartButton = ctk.CTkButton(self,text = 'restart', command=restart)
+        self.restartButton.grid(column = 0, row = 4)
 
 
 
