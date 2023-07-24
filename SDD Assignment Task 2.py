@@ -514,7 +514,7 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
     global t1ScoreFrame 
     global t2ScoreFrame
     global gameTab
-    
+
     gameTab = None
     gameTab = ctk.CTkTabview(master = root, width = 900, height = 700, border_color = "black", fg_color= 'black' )
 
@@ -550,8 +550,29 @@ def closeProgram(): #exits program
 def restart(): #restarts program from start
     global menuScreen
     global endFrame
+    global team1Entries
+    global team2Entries
+    global teamOneName
+    global teamTwoName
+
+    t1Name = teamOneName.get()
+    t2Name = teamTwoName.get()
+
+    teamOneName.delete(0, len(t1Name))
+    teamTwoName.delete(0,len(t2Name))
+
+    for field in team1Entries:
+        word  = field.get()
+        field.delete(0,len(word))
+        
+
+    for field in team2Entries:
+        word  = field.get()
+        field.delete(0,len(word))
+        
     endFrame.forget()
     menuScreen.pack()
+    return
 
 
 team1Players = []
@@ -760,7 +781,7 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
         self.winnersLabel.grid(column = 0, row = 2, columnspan = 4, padx = 5, pady = 5, rowspan = 2)
 
         self.restartButton = ctk.CTkButton(self,text = 'restart', command=restart)
-        self.restartButton.grid(column = 0, row = 4)
+        self.restartButton.grid(column = 0, row = 4) 
 
 
 
