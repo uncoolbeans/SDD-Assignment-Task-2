@@ -518,6 +518,8 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
     gameTab = None
     gameTab = ctk.CTkTabview(master = root, width = 900, height = 700, border_color = "black", fg_color= 'black' )
 
+    messagebox.showwarning(title='Warning!', message='Please do not close the program at any time during the game, as data will be lost!\nPress OK to begin game.')
+
 
     #adding game screens to the tabview
     gameTab.add(t1_name)
