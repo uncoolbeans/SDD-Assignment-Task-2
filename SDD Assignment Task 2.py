@@ -536,6 +536,8 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
 
 def endGame(): #special function to consolidate all data and display end game screen
 
+    messagebox.askokcancel(title='End game?',message = 'Please ensure that all game data is entered, this action cannot be reversed!')
+
     global t1ScoreFrame
     global t2ScoreFrame
     global gameTab
@@ -782,8 +784,11 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
 
         self.winnersLabel.grid(column = 0, row = 2, columnspan = 4, padx = 5, pady = 5, rowspan = 2)
 
-        self.restartButton = ctk.CTkButton(self,text = 'restart', command=restart)
-        self.restartButton.grid(column = 0, row = 4) 
+        self.restartButton = ctk.CTkButton(self,text = 'Restart!', command=restart,
+                                           font = ("Bahnschrift SemiBold",25),
+                                           fg_color = 'red',
+                                           width=150, height = 30)
+        self.restartButton.grid(column = 0, row = 4, columnspan = 4) 
 
 
 
