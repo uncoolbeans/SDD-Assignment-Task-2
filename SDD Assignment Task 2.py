@@ -559,6 +559,11 @@ def closeProgram(): #exits program
     return
 
 def restart(): #restarts program from start
+
+    msg_box = messagebox.askokcancel(title='Restart game?', message='Restart game? All data will be lost, this action cannot be reversed.')
+    if msg_box == False:
+        return
+    
     global menuScreen
     global endFrame
     global team1Entries
