@@ -518,8 +518,9 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
     gameTab = None
     gameTab = ctk.CTkTabview(master = root, width = 900, height = 700, border_color = "black", fg_color= 'black' )
 
-    messagebox.showwarning(title='Warning!', message='Please do not close the program at any time during the game, as data will be lost!\nPress OK to begin game.')
-
+    msg_box = messagebox.askokcancel(title='Warning!', message='Please do not close the program at any time during the game, as data will be lost!\nPress OK to begin game.')
+    if msg_box == False:
+        return
 
     #adding game screens to the tabview
     gameTab.add(t1_name)
@@ -536,13 +537,19 @@ def startGame(oldFrame, newFrame, t1Name, t2Name, t1Entries, t2Entries): #functi
 
 def endGame(): #special function to consolidate all data and display end game screen
 
-    messagebox.askokcancel(title='End game?',message = 'Please ensure that all game data is entered, this action cannot be reversed!')
+    msg_box = messagebox.askokcancel(title='End game?',message = 'Please ensure that all game data is entered, this action cannot be reversed!')
+    if msg_box == False: #stops function if user presses cancel
+        return
+    else:
+        pass
 
     global t1ScoreFrame
     global t2ScoreFrame
     global gameTab
     global endFrame
-
+    if t1ScoreFrame.teamRuns == 0 and t2ScoreFrame.teamRuns == 0:
+        messagebox.showerror(title='Error!',message='At least one team must have more than 0 runs! Please check your input!')
+        return
     endFrame = gameEndScreen(root,t1ScoreFrame,t2ScoreFrame) #loading endGame screen and removing previous screen
     gameTab.forget()
     endFrame.pack()
@@ -770,14 +777,14 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
 
         if self.team1Data.teamRuns > self.team2Data.teamRuns: #case where team 1 wins
             diff = self.team1Data.teamRuns - self.team2Data.teamRuns
-            self.winnersLabel = ctk.CTkLabel(self,text = f'Team 1 wins by {diff} runs!',
+            self.winnersLabel = ctk.CTkLabel(self,text = f'{self.team1Data.teamName} wins by {diff} runs!',
                                              font = ("Bahnschrift SemiBold",35),
                                              height = 50, width = 500
                                              )
 
         elif self.team2Data.teamRuns > self.team1Data.teamRuns: #case where team 2 wins
             diff = self.team2Data.teamRuns - self.team1Data.teamRuns
-            self.winnersLabel = ctk.CTkLabel(self,text = f'Team 2 wins by {diff} runs!',
+            self.winnersLabel = ctk.CTkLabel(self,text = f'{self.team2Data.teamName} wins by {diff} runs!',
                                              font = ("Bahnschrift SemiBold",35),
                                              height = 50, width = 500
                                              )
