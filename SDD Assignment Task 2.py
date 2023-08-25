@@ -547,8 +547,9 @@ def endGame(): #special function to consolidate all data and display end game sc
     global t2ScoreFrame
     global gameTab
     global endFrame
-    if t1ScoreFrame.teamRuns == 0 and t2ScoreFrame.teamRuns == 0:
-        messagebox.showerror(title='Error!',message='At least one team must have more than 0 runs! Please check your input!')
+
+    if (t1ScoreFrame.teamRuns == 0 and t2ScoreFrame.teamRuns == 0) or (t1ScoreFrame.totalBalls==0 or t2ScoreFrame.totalBalls==0):
+        messagebox.showerror(title='Error!',message='At least one team must have more than 0 runs and neither teams can have 0 balls! Please check your input!')
         return
     endFrame = gameEndScreen(root,t1ScoreFrame,t2ScoreFrame) #loading endGame screen and removing previous screen
     gameTab.forget()
@@ -702,7 +703,7 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
         
         self.scoreText.grid(row = 0, column = 0, columnspan = 4, pady = 5)
 
-        class teamDataSubFrame(ctk.CTkFrame):
+        class teamDataSubFrame(ctk.CTkFrame): #subframe within screen to display outed players for both teams
             def __init__(self, master, teamData):
                 super().__init__(master, width=400, height = 800)
 
@@ -774,6 +775,17 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
                                                      height = 25, width = 150
                                                      )
                 self.noBallsIndicator.grid(column = 1, row = 6, padx = 5, pady = 5, sticky = 'e')
+
+                self.runRateIndicator = ctk.CTkLabel(self, text = str(round((teamData.teamRuns/teamData.totalBalls),2)),
+                                                     font = ("Bahnschrift SemiBold",25),
+                                                     height = 25, width = 150
+                                                     )
+                self.runRateIndicator.grid(column = 1, row = 7, padx = 5, pady = 5, sticky = 'e')
+                self.runRateLabel = ctk.CTkLabel(self, text = 'Run rate:',
+                                                font = ("Bahnschrift SemiBold",20),
+                                                height = 25, width = 100
+                                                )
+                self.runRateLabel.grid(column = 0, row = 7, padx = 5, pady = 5, sticky = 'w')
 
         self.teamOneFrame = teamDataSubFrame(self, self.team1Data)
         self.teamTwoFrame = teamDataSubFrame(self, self.team2Data)
