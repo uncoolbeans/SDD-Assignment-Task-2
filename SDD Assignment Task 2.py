@@ -805,7 +805,12 @@ class gameEndScreen(ctk.CTkFrame): #screen containing the final display of the s
                                              font = ("Bahnschrift SemiBold",35),
                                              height = 50, width = 500
                                              )
-
+        elif self.team2Data.teamRuns == self.team1Data.teamRuns:
+            self.winnersLabel = ctk.CTkLabel(self,text = f'Tied game!',
+                                             font = ("Bahnschrift SemiBold",35),
+                                             height = 50, width = 500
+                                             )
+            
         self.winnersLabel.grid(column = 0, row = 2, columnspan = 4, padx = 5, pady = 5, rowspan = 2)
 
         self.restartButton = ctk.CTkButton(self,text = 'Restart!', command=restart,
